@@ -38,8 +38,8 @@
 #ifndef MANGOS_H_AUCTION_HOUSE_MGR
 #define MANGOS_H_AUCTION_HOUSE_MGR
 
-#include "Common.h"
-#include "DBCStructure.h"
+#include "Common/Common.h"
+#include "Server/DBCStructure.h"
 
 /** \addtogroup auctionhouse
  * @{

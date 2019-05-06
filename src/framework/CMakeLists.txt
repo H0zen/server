@@ -17,42 +17,127 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-set(LIBRARY_NAME framework)
+include(TestBigEndian)
+test_big_endian(IS_BIG_ENDIAN)
 
-file(GLOB SRC_GRP_DYNAMIC Dynamic/*.h)
-source_group("Dynamic" FILES ${SRC_GRP_DYNAMIC})
-
-file(GLOB SRC_GRP_GAMESYSTEM GameSystem/*.h)
-source_group("GameSystem" FILES ${SRC_GRP_GAMESYSTEM})
-
-file(GLOB SRC_GRP_PLATFORM Platform/*.h)
-source_group("Platform" FILES ${SRC_GRP_PLATFORM})
-
-file(GLOB SRC_GRP_POLICIES Policies/*.h Policies/*.cpp)
-source_group("Policies" FILES ${SRC_GRP_POLICIES})
-
-file(GLOB SRC_GRP_UTILITIES Utilities/*.h Utilities/*.cpp)
-source_group("Utilities" FILES ${SRC_GRP_UTILITIES})
-
-file(GLOB SRC_GRP_LINKED_REFERENCE Utilities/LinkedReference/*.h)
-source_group("Utilities\\LinkedReference" FILES ${SRC_GRP_LINKED_REFERENCE})
-
-set(LIBRARY_SRCS
-    ${SRC_GRP_DYNAMIC}
-    ${SRC_GRP_GAMESYSTEM}
-    ${SRC_GRP_PLATFORM}
-    ${SRC_GRP_POLICIES}
-    ${SRC_GRP_UTILITIES}
-    ${SRC_GRP_LINKED_REFERENCE}
+configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/SystemConfig.h.in
+    ${CMAKE_CURRENT_BINARY_DIR}/SystemConfig.h
 )
 
-include_directories(
-    ${CMAKE_CURRENT_SOURCE_DIR}
-    ${ACE_INCLUDE_DIR}
+add_library(framework STATIC
+  Dynamic/FactoryHolder.h
+  Dynamic/ObjectRegistry.h
+  GameSystem/Grid.h
+  GameSystem/GridLoader.h
+  GameSystem/GridRefManager.h
+  GameSystem/GridReference.h
+  GameSystem/NGrid.h
+  GameSystem/TypeContainer.h
+  GameSystem/TypeContainerVisitor.h
+  Policies/CreationPolicy.h
+  Policies/ObjectLifeTime.cpp
+  Policies/ObjectLifeTime.h
+  Policies/Singleton.h
+  Policies/ThreadingModel.h
+  Utilities/ByteConverter.h
+  Utilities/Callback.h
+  Utilities/EventProcessor.cpp
+  Utilities/EventProcessor.h
+  Utilities/LinkedList.h
+  Utilities/LinkedReference/RefManager.h
+  Utilities/LinkedReference/Reference.h
+  Utilities/TypeList.h
+  Utilities/UnorderedMapSet.h
+  Utilities/ByteBuffer.cpp
+  Utilities/ByteBuffer.h
+  Utilities/Errors.h
+  Utilities/ProgressBar.cpp
+  Utilities/ProgressBar.h
+  Utilities/RNGen.h
+  Utilities/Timer.h
+  Utilities/Util.cpp
+  Utilities/Util.h
+  Utilities/WorldPacket.h
+  Auth/ARC4.cpp
+  Auth/ARC4.h
+  Auth/AuthCrypt.cpp
+  Auth/AuthCrypt.h
+  Auth/BigNumber.cpp
+  Auth/BigNumber.h
+  Auth/HMACSHA1.cpp
+  Auth/HMACSHA1.h
+  Auth/Sha1.cpp
+  Auth/Sha1.h
+  Auth/WardenKeyGeneration.h
+  Auth/md5.h
+  Auth/md5.cpp
+  Common/Common.h
+  Common/Define.h
+  Config/Config.cpp
+  Config/Config.h
+  DataStores/DBCFileLoader.cpp
+  DataStores/DBCFileLoader.h
+  DataStores/DBCStore.h
+  Database/Database.cpp
+  Database/Database.h
+  Database/DatabaseEnv.h
+  Database/DatabaseImpl.h
+  Database/DatabaseMysql.cpp
+  Database/DatabaseMysql.h
+  Database/DatabasePostgre.cpp
+  Database/DatabasePostgre.h
+  Database/Field.cpp
+  Database/Field.h
+  Database/PGSQLDelayThread.h
+  Database/QueryResult.h
+  Database/QueryResultMysql.cpp
+  Database/QueryResultMysql.h
+  Database/QueryResultPostgre.cpp
+  Database/QueryResultPostgre.h
+  Database/SQLStorage.cpp
+  Database/SQLStorage.h
+  Database/SQLStorageImpl.h
+  Database/SqlDelayThread.cpp
+  Database/SqlDelayThread.h
+  Database/SqlOperations.cpp
+  Database/SqlOperations.h
+  Database/SqlPreparedStatement.cpp
+  Database/SqlPreparedStatement.h
+  LockedQueue/LockedQueue.h
+  Log/Log.cpp
+  Log/Log.h
+  Threading/DelayExecutor.cpp
+  Threading/DelayExecutor.h
+  Threading/Threading.cpp
+  Threading/Threading.h
+  SystemConfig.h.in
+  revision.h
+  Locale/Locale.h
+  Locale/Locale.cpp
+  #Service/ServiceWin32.cpp
+  #Service/ServiceWin32.h
+  Service/PosixDaemon.cpp
+  Service/PosixDaemon.h
+  ${CMAKE_CURRENT_BINARY_DIR}/SystemConfig.h
 )
 
-add_library(${LIBRARY_NAME} STATIC ${LIBRARY_SRCS})
+target_include_directories(framework
+    PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}
+        ${CMAKE_CURRENT_BINARY_DIR}
+)
 
-if(NOT ACE_USE_EXTERNAL)
-    add_dependencies(${LIBRARY_NAME} ace)
-endif()
+target_compile_definitions(framework
+    PUBLIC
+        $<$<CONFIG:Debug>:MANGOS_DEBUG>
+        MANGOS_ENDIAN=${IS_BIG_ENDIAN}
+)
+
+target_link_libraries(framework
+    PUBLIC
+        ace
+        utf8
+        OpenSSL::Crypto
+        MySQL::MySQL
+)

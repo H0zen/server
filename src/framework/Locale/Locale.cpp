@@ -22,61 +22,40 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-#ifndef MANGOS_OBJECTLIFETIME_H
-#define MANGOS_OBJECTLIFETIME_H
+#include "Locale/Locale.h"
 
-#include "Common/Common.h"
-
-/**
- * @brief
- *
- */
-typedef void (* Destroyer)(void);
-
-namespace MaNGOS
+char const* localeNames[MAX_LOCALE] =
 {
-    /**
-     * @brief
-     *
-     * @param (func)()
-     */
-    void  at_exit(void (*func)());
+    "enUS",                                                 // also enGB
+    "koKR",
+    "frFR",
+    "deDE",
+    "zhCN",
+    "zhTW",
+    "esES",
+    "esMX",
+};
 
-    template<class T>
-    /**
-     * @brief
-     *
-     */
-    class ObjectLifeTime
-    {
-        public:
+// used for search by name or iterate all names
+LocaleNameStr const fullLocaleNameList[] =
+{
+    { "enUS", LOCALE_enUS },
+    { "enGB", LOCALE_enUS },
+    { "koKR", LOCALE_koKR },
+    { "frFR", LOCALE_frFR },
+    { "deDE", LOCALE_deDE },
+    { "zhCN", LOCALE_zhCN },
+    { "zhTW", LOCALE_zhTW },
+    { "esES", LOCALE_esES },
+    { "esMX", LOCALE_esMX },
+    { NULL,   LOCALE_enUS }
+};
 
-            /**
-             * @brief
-             *
-             * @param (destroyer)()
-             */
-            static void ScheduleCall(void (*destroyer)())
-            {
-                at_exit(destroyer);
-            }
+LocaleConstant GetLocaleByName(const std::string& name)
+{
+    for (LocaleNameStr const* itr = &fullLocaleNameList[0]; itr->name; ++itr)
+        if (name == itr->name)
+            { return itr->locale; }
 
-            /**
-             * @brief
-             *
-             */
-            DECLSPEC_NORETURN static void OnDeadReference() ATTR_NORETURN;
-    };
-
-    template <class T>
-    /**
-     * @brief We don't handle Dead Reference for now
-     *
-     */
-    void ObjectLifeTime<T>::OnDeadReference()           // We don't handle Dead Reference for now
-    {
-        throw std::runtime_error("Dead Reference");
-    }
+    return LOCALE_enUS;                                     // including enGB case
 }
-
-#endif

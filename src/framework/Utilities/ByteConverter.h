@@ -30,7 +30,7 @@
  * where they have different endians.
  */
 
-#include "Platform/Define.h"
+#include "Common/Define.h"
 #include <algorithm>
 
 namespace ByteConverter

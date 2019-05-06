@@ -30,7 +30,7 @@
  *
  */
 
-#include "Platform/Define.h"
+#include "Common/Common.h"
 
 namespace MaNGOS
 {

@@ -22,61 +22,35 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-#ifndef MANGOS_OBJECTLIFETIME_H
-#define MANGOS_OBJECTLIFETIME_H
+#ifndef MANGOSSERVER_LOCALE_H
+#define MANGOSSERVER_LOCALE_H
 
 #include "Common/Common.h"
 
-/**
- * @brief
- *
- */
-typedef void (* Destroyer)(void);
-
-namespace MaNGOS
+enum LocaleConstant
 {
-    /**
-     * @brief
-     *
-     * @param (func)()
-     */
-    void  at_exit(void (*func)());
+    LOCALE_enUS = 0,    // also enGB
+    LOCALE_koKR = 1,
+    LOCALE_frFR = 2,
+    LOCALE_deDE = 3,
+    LOCALE_zhCN = 4,
+    LOCALE_zhTW = 5,
+    LOCALE_esES = 6,
+    LOCALE_esMX = 7
+};
 
-    template<class T>
-    /**
-     * @brief
-     *
-     */
-    class ObjectLifeTime
-    {
-        public:
+#define MAX_LOCALE 8
+#define DEFAULT_LOCALE LOCALE_enUS
 
-            /**
-             * @brief
-             *
-             * @param (destroyer)()
-             */
-            static void ScheduleCall(void (*destroyer)())
-            {
-                at_exit(destroyer);
-            }
+LocaleConstant GetLocaleByName(const std::string& name);
+extern char const* localeNames[MAX_LOCALE]; /**< TODO */
 
-            /**
-             * @brief
-             *
-             */
-            DECLSPEC_NORETURN static void OnDeadReference() ATTR_NORETURN;
-    };
+struct LocaleNameStr
+{
+    char const* name; /**< TODO */
+    LocaleConstant locale; /**< TODO */
+};
 
-    template <class T>
-    /**
-     * @brief We don't handle Dead Reference for now
-     *
-     */
-    void ObjectLifeTime<T>::OnDeadReference()           // We don't handle Dead Reference for now
-    {
-        throw std::runtime_error("Dead Reference");
-    }
-}
+extern LocaleNameStr const fullLocaleNameList[]; /**< used for iterate all names including alternative */
 
 #endif

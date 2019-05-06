@@ -22,7 +22,6 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-#include <cstdlib>
 #include "ObjectLifeTime.h"
 
 namespace MaNGOS

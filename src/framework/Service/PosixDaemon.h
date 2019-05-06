@@ -22,61 +22,21 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-#ifndef MANGOS_OBJECTLIFETIME_H
-#define MANGOS_OBJECTLIFETIME_H
-
 #include "Common/Common.h"
 
 /**
  * @brief
  *
+ * @param timeout
  */
-typedef void (* Destroyer)(void);
-
-namespace MaNGOS
-{
-    /**
-     * @brief
-     *
-     * @param (func)()
-     */
-    void  at_exit(void (*func)());
-
-    template<class T>
-    /**
-     * @brief
-     *
-     */
-    class ObjectLifeTime
-    {
-        public:
-
-            /**
-             * @brief
-             *
-             * @param (destroyer)()
-             */
-            static void ScheduleCall(void (*destroyer)())
-            {
-                at_exit(destroyer);
-            }
-
-            /**
-             * @brief
-             *
-             */
-            DECLSPEC_NORETURN static void OnDeadReference() ATTR_NORETURN;
-    };
-
-    template <class T>
-    /**
-     * @brief We don't handle Dead Reference for now
-     *
-     */
-    void ObjectLifeTime<T>::OnDeadReference()           // We don't handle Dead Reference for now
-    {
-        throw std::runtime_error("Dead Reference");
-    }
-}
-
-#endif
+void startDaemon(uint32_t timeout = 10);
+/**
+ * @brief
+ *
+ */
+void stopDaemon(std::string pidfile);
+/**
+ * @brief
+ *
+ */
+void detachDaemon();

@@ -25,8 +25,7 @@
 #ifndef MANGOS_CREATIONPOLICY_H
 #define MANGOS_CREATIONPOLICY_H
 
-#include <stdlib.h>
-#include "Platform/Define.h"
+#include "Common/Common.h"
 
 namespace MaNGOS
 {

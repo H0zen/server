@@ -25,10 +25,8 @@
 #ifndef AUCTION_HOUSE_BOT_H
 #define AUCTION_HOUSE_BOT_H
 
+#include "Server/SharedDefines.h"
 #include "Config/Config.h"
-#include "AuctionHouseMgr.h"
-#include "SharedDefines.h"
-#include "Item.h"
 
 /**
  * This is the AuctionHouseBot and it is used to make less populated servers

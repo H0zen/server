@@ -25,14 +25,9 @@
 #ifndef MANGOS_DBCSTRUCTURE_H
 #define MANGOS_DBCSTRUCTURE_H
 
-#include "DBCEnums.h"
-#include "Path.h"
-#include "Platform/Define.h"
-#include "SharedDefines.h"
+#include "Server/SharedDefines.h"
+#include "Server/DBCEnums.h"
 
-#include <map>
-#include <set>
-#include <vector>
 
 // Structures using to access raw DBC data and required packing to portability
 

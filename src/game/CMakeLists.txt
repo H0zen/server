@@ -17,47 +17,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-set(LIBRARY_NAME game)
 
-add_definitions(-DDT_POLYREF64)
-
-include_directories(
-    ${CMAKE_CURRENT_SOURCE_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}/AuctionHouseBot
-    ${CMAKE_CURRENT_SOURCE_DIR}/BattleGround
-    ${CMAKE_CURRENT_SOURCE_DIR}/ChatCommands
-    ${CMAKE_CURRENT_SOURCE_DIR}/Maps
-    ${CMAKE_CURRENT_SOURCE_DIR}/MotionGenerators
-    ${CMAKE_CURRENT_SOURCE_DIR}/Object
-    ${CMAKE_CURRENT_SOURCE_DIR}/OutdoorPvP
-    ${CMAKE_CURRENT_SOURCE_DIR}/References
-    ${CMAKE_CURRENT_SOURCE_DIR}/Server
-    ${CMAKE_CURRENT_SOURCE_DIR}/Tools
-    ${CMAKE_CURRENT_SOURCE_DIR}/vmap
-    ${CMAKE_CURRENT_SOURCE_DIR}/Warden
-    ${CMAKE_CURRENT_SOURCE_DIR}/Warden/Modules
-    ${CMAKE_CURRENT_SOURCE_DIR}/WorldHandlers
-    ${CMAKE_SOURCE_DIR}/dep/g3dlite
-    ${CMAKE_SOURCE_DIR}/dep/zlib
-    ${CMAKE_SOURCE_DIR}/dep/recastnavigation/Detour/Include
-    ${CMAKE_SOURCE_DIR}/dep/recastnavigation/Detour
-    ${CMAKE_SOURCE_DIR}/dep/recastnavigation
-    ${CMAKE_SOURCE_DIR}/dep/include
-    ${CMAKE_SOURCE_DIR}/src/shared
-    ${CMAKE_SOURCE_DIR}/src/shared/Auth
-    ${CMAKE_SOURCE_DIR}/src/shared/Config
-    ${CMAKE_SOURCE_DIR}/src/shared/Common
-    ${CMAKE_SOURCE_DIR}/src/shared/Database
-    ${CMAKE_SOURCE_DIR}/src/shared/DataStores
-    ${CMAKE_SOURCE_DIR}/src/shared/Utilities
-    ${CMAKE_SOURCE_DIR}/src/shared/Log
-    ${CMAKE_SOURCE_DIR}/src/shared/Threading
-    ${CMAKE_SOURCE_DIR}/src/framework
-    ${CMAKE_BINARY_DIR}/src/shared
-    ${MYSQL_INCLUDE_DIR}
-    ${OPENSSL_INCLUDE_DIR}
-    ${ACE_INCLUDE_DIR}
-)
 
 #AH Bot group
 file(GLOB SRC_GRP_AHBOT AuctionHouseBot/*.cpp AuctionHouseBot/*.h)
@@ -113,7 +73,7 @@ source_group("Warden" FILES ${SRC_GRP_WARDEN})
 
 #Warden Modules group
 file(GLOB SRC_GRP_WARDEN_MODULES Warden/Modules/*.cpp Warden/Modules/*.h)
-source_group("Warden\\Modules" FILES ${SRC_GRP_WARDEN_MODULES})
+source_group("Warden/Modules" FILES ${SRC_GRP_WARDEN_MODULES})
 
 #World and Handlers group
 file(GLOB SRC_GRP_WORLD_HANDLERS WorldHandlers/*.cpp WorldHandlers/*.h)
@@ -135,56 +95,40 @@ set(LIBRARY_SRCS
     ${SRC_GRP_WARDEN}
     ${SRC_GRP_WARDEN_MODULES}
     ${SRC_GRP_WORLD_HANDLERS}
-    pchdef.cpp
-    pchdef.h
+    $<$<BOOL:${PCH}>:
+        pchdef.cpp
+        pchdef.h
+    >
 )
 
-add_library(${LIBRARY_NAME} STATIC ${LIBRARY_SRCS})
+add_library(game STATIC ${LIBRARY_SRCS})
+
+target_include_directories(game
+    PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
 
 # Generate precompiled header
 if(PCH)
-    ADD_CXX_PCH(${LIBRARY_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/pchdef.h ${CMAKE_CURRENT_SOURCE_DIR}/pchdef.cpp)
+    ADD_CXX_PCH(game ${CMAKE_CURRENT_SOURCE_DIR}/pchdef.h ${CMAKE_CURRENT_SOURCE_DIR}/pchdef.cpp)
 endif()
 
-target_link_libraries(${LIBRARY_NAME} shared detour)
+target_link_libraries(game
+    PUBLIC
+        framework
+        g3dlite
+        RecastNavigation::Detour
+        $<$<BOOL:${PLAYERBOTS}>:Bots>
+        $<$<BOOL:${SCRIPT_LIB_SD3}>:mangosscript>
+        $<$<BOOL:${SCRIPT_LIB_ELUNA}>:lualib>
+)
 
-if(UNIX)
-    # Both systems don't have libdl and don't need them
-    if (NOT (CMAKE_SYSTEM_NAME STREQUAL "FreeBSD" OR CMAKE_SYSTEM_NAME STREQUAL "NetBSD"))
-        target_link_libraries(${LIBRARY_NAME} dl)
-    endif()
-endif()
-
-if(NOT ACE_USE_EXTERNAL)
-    add_dependencies(${LIBRARY_NAME} ace)
-endif()
-
-if(PLAYERBOTS)
-    include_directories(
-        ${CMAKE_SOURCE_DIR}/src/modules/Bots/playerbot
-        ${CMAKE_SOURCE_DIR}/src/modules/Bots/ahbot
-    )
-    target_link_libraries(${LIBRARY_NAME} Bots)
-    add_dependencies(${LIBRARY_NAME} Bots)
-endif()
-
-if(SCRIPT_LIB_SD3)
-    include_directories(${CMAKE_SOURCE_DIR}/src/modules/SD3)
-    target_link_libraries(${LIBRARY_NAME} mangosscript)
-    add_dependencies(${LIBRARY_NAME} mangosscript)
-endif()
-
-if(SCRIPT_LIB_ELUNA)
-    include_directories(
-        ${CMAKE_SOURCE_DIR}/dep/lualib
-        ${CMAKE_SOURCE_DIR}/src/modules/Eluna
-    )
-    list(APPEND LIBRARY_SRCS ${SRC_GRP_LUAENGINE})
-    target_link_libraries(${LIBRARY_NAME} LuaEngine)
-    target_link_libraries(${LIBRARY_NAME} lualib)
-    add_dependencies(${LIBRARY_NAME} LuaEngine)
-    add_dependencies(${LIBRARY_NAME} lualib)
-endif()
+target_compile_definitions(game
+    PUBLIC
+        CLASSIC
+        $<$<BOOL:${SCRIPT_LIB_ELUNA}>:ENABLE_ELUNA>
+)
 
 #AH Bot Config
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/AuctionHouseBot/ahbot.conf.dist.in" "${CMAKE_CURRENT_BINARY_DIR}/AuctionHouseBot/ahbot.conf.dist")

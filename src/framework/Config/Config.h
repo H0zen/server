@@ -22,93 +22,93 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-#ifndef MANGOS_FACTORY_HOLDER
-#define MANGOS_FACTORY_HOLDER
+#ifndef CONFIG_H
+#define CONFIG_H
 
+#include "Common/Common.h"
+#include <Policies/Singleton.h>
 #include "Common/Define.h"
-#include "Utilities/TypeList.h"
-#include "ObjectRegistry.h"
-#include "Policies/Singleton.h"
 
-template < class T, class Key = std::string >
+class ACE_Configuration_Heap;
+
 /**
- * @brief FactoryHolder holds a factory object of a specific type
+ * @brief
  *
  */
-class FactoryHolder
+class Config
 {
     public:
         /**
          * @brief
          *
          */
-        typedef ObjectRegistry<FactoryHolder<T, Key >, Key > FactoryHolderRegistry;
+        Config();
         /**
          * @brief
          *
          */
-        typedef MaNGOS::Singleton<FactoryHolderRegistry > FactoryHolderRepository;
+        ~Config();
 
         /**
          * @brief
          *
-         * @param k
+         * @param file
+         * @return bool
          */
-        FactoryHolder(Key k) : i_key(k) {}
+        bool SetSource(const char* file);
         /**
          * @brief
          *
+         * @return bool
          */
-        virtual ~FactoryHolder() {}
-        /**
-         * @brief
-         *
-         * @return Key
-         */
-        inline Key key() const { return i_key; }
+        bool Reload();
 
         /**
          * @brief
          *
+         * @param name
+         * @param def
+         * @return std::string
          */
-        void RegisterSelf(void) { FactoryHolderRepository::Instance().InsertItem(this, i_key); }
+        std::string GetStringDefault(const char* name, const char* def);
         /**
          * @brief
          *
+         * @param name
+         * @param def
+         * @return bool
          */
-        void DeregisterSelf(void) { FactoryHolderRepository::Instance().RemoveItem(this, false); }
+        bool GetBoolDefault(const char* name, const bool def = false);
+        /**
+         * @brief
+         *
+         * @param name
+         * @param def
+         * @return int32
+         */
+        int32 GetIntDefault(const char* name, const int32 def);
+        /**
+         * @brief
+         *
+         * @param name
+         * @param def
+         * @return float
+         */
+        float GetFloatDefault(const char* name, const float def);
 
         /**
-         * @brief Abstract Factory create method
+         * @brief
          *
-         * @param data
-         * @return T
+         * @return std::string
          */
-        virtual T* Create(void* data = NULL) const = 0;
+        std::string GetFilename() const { return mFilename; }
+
     private:
-        Key i_key; /**< TODO */
+
+        std::string mFilename; /**< TODO */
+        ACE_Configuration_Heap* mConf; /**< TODO */
 };
 
-template<class T>
-/**
- * @brief Permissible is a classic way of letting the object decide whether how good they handle things.
- *
- * This is not retricted to factory selectors.
- */
-class Permissible
-{
-    public:
-        /**
-         * @brief
-         *
-         */
-        virtual ~Permissible() {}
-        /**
-         * @brief
-         *
-         * @param
-         * @return int
-         */
-        virtual int Permit(const T*) const = 0;
-};
+#define sConfig MaNGOS::Singleton<Config>::Instance()
+
 #endif

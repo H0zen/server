@@ -22,61 +22,44 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-#ifndef MANGOS_OBJECTLIFETIME_H
-#define MANGOS_OBJECTLIFETIME_H
+#ifndef MANGOSSERVER_SERVERDEFINES_H
+#define MANGOSSERVER_SERVERDEFINES_H
 
 #include "Common/Common.h"
 
-/**
- * @brief
- *
- */
-typedef void (* Destroyer)(void);
-
-namespace MaNGOS
+enum TimeConstants
 {
-    /**
-     * @brief
-     *
-     * @param (func)()
-     */
-    void  at_exit(void (*func)());
+    MINUTE = 60,
+    HOUR   = MINUTE * 60,
+    DAY    = HOUR * 24,
+    WEEK   = DAY * 7,
+    MONTH  = DAY * 30,
+    YEAR   = MONTH * 12,
+    IN_MILLISECONDS = 1000
+};
 
-    template<class T>
-    /**
-     * @brief
-     *
-     */
-    class ObjectLifeTime
-    {
-        public:
+enum AccountTypes
+{
+    SEC_PLAYER         = 0,
+    SEC_MODERATOR      = 1,
+    SEC_GAMEMASTER     = 2,
+    SEC_ADMINISTRATOR  = 3,
+    SEC_CONSOLE        = 4  // must be always last in list, accounts must have less security level always also
+};
 
-            /**
-             * @brief
-             *
-             * @param (destroyer)()
-             */
-            static void ScheduleCall(void (*destroyer)())
-            {
-                at_exit(destroyer);
-            }
+enum RealmFlags
+{
+    REALM_FLAG_NONE         = 0x00,
+    REALM_FLAG_INVALID      = 0x01,
+    REALM_FLAG_OFFLINE      = 0x02,
+    REALM_FLAG_SPECIFYBUILD = 0x04, // client will show realm version in RealmList screen in form "RealmName (major.minor.revision.build)"
+    REALM_FLAG_UNK1         = 0x08,
+    REALM_FLAG_UNK2         = 0x10,
+    REALM_FLAG_NEW_PLAYERS  = 0x20,
+    REALM_FLAG_RECOMMENDED  = 0x40,
+    REALM_FLAG_FULL         = 0x80
+};
 
-            /**
-             * @brief
-             *
-             */
-            DECLSPEC_NORETURN static void OnDeadReference() ATTR_NORETURN;
-    };
-
-    template <class T>
-    /**
-     * @brief We don't handle Dead Reference for now
-     *
-     */
-    void ObjectLifeTime<T>::OnDeadReference()           // We don't handle Dead Reference for now
-    {
-        throw std::runtime_error("Dead Reference");
-    }
-}
+typedef std::vector<std::string> StringVector;
 
 #endif

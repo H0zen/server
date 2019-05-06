@@ -25,7 +25,7 @@
 #ifndef MANGOS_GRIDLOADER_H
 #define MANGOS_GRIDLOADER_H
 
-#include "Platform/Define.h"
+#include "Common/Define.h"
 #include "Grid.h"
 #include "TypeContainerVisitor.h"
 

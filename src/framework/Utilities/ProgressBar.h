@@ -22,61 +22,58 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-#ifndef MANGOS_OBJECTLIFETIME_H
-#define MANGOS_OBJECTLIFETIME_H
+#ifndef MANGOSSERVER_PROGRESSBAR_H
+#define MANGOSSERVER_PROGRESSBAR_H
 
-#include "Common/Common.h"
+#include "Common/Define.h"
 
 /**
  * @brief
  *
  */
-typedef void (* Destroyer)(void);
-
-namespace MaNGOS
+class BarGoLink
 {
-    /**
-     * @brief
-     *
-     * @param (func)()
-     */
-    void  at_exit(void (*func)());
+    public:
+        /**
+         * @brief constructors
+         *
+         * @param row_count
+         */
+        explicit BarGoLink(int row_count);
+        /**
+         * @brief
+         *
+         */
+        ~BarGoLink();
 
-    template<class T>
-    /**
-     * @brief
-     *
-     */
-    class ObjectLifeTime
-    {
-        public:
+    public:
+        /**
+         * @brief modifiers
+         *
+         */
+        void step();
 
-            /**
-             * @brief
-             *
-             * @param (destroyer)()
-             */
-            static void ScheduleCall(void (*destroyer)())
-            {
-                at_exit(destroyer);
-            }
+        /**
+         * @brief
+         *
+         * @param on
+         */
+        static void SetOutputState(bool on);
+    private:
+        /**
+         * @brief
+         *
+         * @param row_count
+         */
+        void init(int row_count);
 
-            /**
-             * @brief
-             *
-             */
-            DECLSPEC_NORETURN static void OnDeadReference() ATTR_NORETURN;
-    };
+        static bool m_showOutput; /**< not recommended change with existed active bar */
+        static char const* const empty; /**< TODO */
+        static char const* const full; /**< TODO */
 
-    template <class T>
-    /**
-     * @brief We don't handle Dead Reference for now
-     *
-     */
-    void ObjectLifeTime<T>::OnDeadReference()           // We don't handle Dead Reference for now
-    {
-        throw std::runtime_error("Dead Reference");
-    }
-}
-
+        int rec_no; /**< TODO */
+        int rec_pos; /**< TODO */
+        int num_rec; /**< TODO */
+        int indic_len; /**< TODO */
+};
 #endif

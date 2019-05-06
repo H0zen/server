@@ -22,61 +22,58 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-#ifndef MANGOS_OBJECTLIFETIME_H
-#define MANGOS_OBJECTLIFETIME_H
+#ifndef MANGOS_RNG_H
+#define MANGOS_RNG_H
 
-#include "Common/Common.h"
+#include <random>
 
-/**
- * @brief
- *
- */
-typedef void (* Destroyer)(void);
+#include "ace/Singleton.h"
+#include "ace/Synch_Traits.h"
+#include "Common/Define.h"
 
-namespace MaNGOS
+class RNGen
 {
-    /**
-     * @brief
-     *
-     * @param (func)()
-     */
-    void  at_exit(void (*func)());
-
-    template<class T>
-    /**
-     * @brief
-     *
-     */
-    class ObjectLifeTime
+public:
+    RNGen()
     {
-        public:
-
-            /**
-             * @brief
-             *
-             * @param (destroyer)()
-             */
-            static void ScheduleCall(void (*destroyer)())
-            {
-                at_exit(destroyer);
-            }
-
-            /**
-             * @brief
-             *
-             */
-            DECLSPEC_NORETURN static void OnDeadReference() ATTR_NORETURN;
-    };
-
-    template <class T>
-    /**
-     * @brief We don't handle Dead Reference for now
-     *
-     */
-    void ObjectLifeTime<T>::OnDeadReference()           // We don't handle Dead Reference for now
-    {
-        throw std::runtime_error("Dead Reference");
+        std::random_device rd;
+        gen_.seed(rd());
     }
-}
+
+    int32 rand_i(int32 min, int32 max)
+    {
+        std::uniform_int_distribution<int32> dist{min, max};
+        return dist(gen_);
+    }
+
+    uint32 rand_u(uint32 min, uint32 max)
+    {
+        std::uniform_int_distribution<uint32> dist{min, max};
+        return dist(gen_);
+    }
+
+    uint32 rand()
+    {
+        std::uniform_int_distribution<uint32> dist;
+        return dist(gen_);
+    }
+
+    float rand_f(float min, float max)
+    {
+        std::uniform_real_distribution<float> dist{min, max};
+        return dist(gen_);
+    }
+
+    double rand_d(double min, double max)
+    {
+        std::uniform_real_distribution<double> dist{min, max};
+        return dist(gen_);
+    }
+
+private:
+    std::mt19937 gen_;
+};
+
+typedef ACE_TSS_Singleton<RNGen, ACE_SYNCH_MUTEX> RNG;
 
 #endif

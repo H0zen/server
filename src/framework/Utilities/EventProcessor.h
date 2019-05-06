@@ -25,7 +25,7 @@
 #ifndef MANGOS_H_EVENTPROCESSOR
 #define MANGOS_H_EVENTPROCESSOR
 
-#include "Platform/Define.h"
+#include "Common/Define.h"
 
 #include <map>
 
