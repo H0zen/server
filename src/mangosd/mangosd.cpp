@@ -26,8 +26,6 @@
 /// @{
 /// \file
 
-#include <openssl/opensslv.h>
-#include <openssl/crypto.h>
 #include <ace/Version.h>
 #include <ace/Get_Opt.h>
 
@@ -55,7 +53,7 @@
 #endif
 
 #ifdef _WIN32
- #include "ServiceWin32.h"
+ #include "Win/ServiceWin32.h"
 
   char serviceName[]        = "MaNGOS";               // service short name
   char serviceLongName[]    = "MaNGOS World Service"; // service long name
@@ -375,13 +373,6 @@ int main(int argc, char** argv)
     sLog.outString("%s [world-daemon]", REVISION_NR);
     print_banner();
     sLog.outString("Using configuration file %s.", cfg_file);
-
-    DETAIL_LOG("%s (Library: %s)", OPENSSL_VERSION_TEXT, SSLeay_version(SSLEAY_VERSION));
-    if (SSLeay() < 0x009080bfL)
-    {
-        DETAIL_LOG("WARNING: Outdated version of OpenSSL lib. Logins to server may not work!");
-        DETAIL_LOG("WARNING: Minimal required version [OpenSSL 0.9.8k]");
-    }
 
     DETAIL_LOG("Using ACE: %s", ACE_VERSION);
 

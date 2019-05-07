@@ -25,7 +25,7 @@
 #ifndef MANGOS_H_ITEM_ENCHANTMENT_MGR
 #define MANGOS_H_ITEM_ENCHANTMENT_MGR
 
-#include "Common.h"
+#include "Common/Common.h"
 
 void LoadRandomEnchantmentsTable();
 uint32 GetItemEnchantMod(uint32 entry);

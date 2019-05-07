@@ -22,13 +22,13 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-#include "Common.h"
+#include "Common/Common.h"
 #include "Database/DatabaseEnv.h"
-#include "WorldPacket.h"
+#include "Utilities/WorldPacket.h"
 #include "SharedDefines.h"
 #include "WorldSession.h"
 #include "Opcodes.h"
-#include "Log.h"
+#include "Log/Log.h"
 #include "World.h"
 #include "ObjectMgr.h"
 #include "Player.h"
@@ -41,7 +41,7 @@
 #include "Database/DatabaseImpl.h"
 #include "PlayerDump.h"
 #include "SocialMgr.h"
-#include "Util.h"
+#include "Utilities/Util.h"
 #include "Language.h"
 #include "Chat.h"
 #include "SpellMgr.h"

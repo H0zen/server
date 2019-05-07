@@ -25,7 +25,7 @@
 #ifndef MANGOS_LOOTMGR_H
 #define MANGOS_LOOTMGR_H
 
-#include "ByteBuffer.h"
+#include "Utilities/ByteBuffer.h"
 #include "ObjectGuid.h"
 #include "Utilities/LinkedReference/RefManager.h"
 

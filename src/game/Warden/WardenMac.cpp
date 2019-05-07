@@ -24,18 +24,18 @@
  */
 
 #include "WardenKeyGeneration.h"
-#include "Common.h"
-#include "WorldPacket.h"
+#include "Common/Common.h"
+#include "Utilities/WorldPacket.h"
 #include "WorldSession.h"
-#include "Log.h"
+#include "Log/Log.h"
 #include "Opcodes.h"
-#include "ByteBuffer.h"
-#include <openssl/md5.h>
+#include "Utilities/ByteBuffer.h"
 #include "World.h"
 #include "Player.h"
-#include "Util.h"
+#include "Utilities/Util.h"
 #include "WardenMac.h"
 #include "WardenModuleMac.h"
+#include "Auth/md5.h"
 
 WardenMac::WardenMac() : Warden() { }
 
@@ -45,7 +45,7 @@ void WardenMac::Init(WorldSession* pClient, BigNumber* K)
 {
     _session = pClient;
     // Generate Warden Key
-    SHA1Randx WK(K->AsByteArray(), K->GetNumBytes());
+    SHA1Randx WK(K);
     WK.Generate(_inputKey, 16);
     WK.Generate(_outputKey, 16);
     /*
@@ -87,10 +87,9 @@ ClientWardenModule* WardenMac::GetModuleForClient()
     memcpy(mod->Key, Module_0DBBF209A27B1E279A9FEC5C168A15F7_Key, 16);
 
     // md5 hash
-    MD5_CTX ctx;
-    MD5_Init(&ctx);
-    MD5_Update(&ctx, mod->CompressedData, len);
-    MD5_Final((uint8*)&mod->Id, &ctx);
+    AMD5 md5;
+    md5.UpdateData(mod->CompressedData, len);
+    md5.FinalizeTo((uint8*)&mod->Id);
 
     return mod;
 }
@@ -146,13 +145,14 @@ void WardenMac::HandleHashResult(ByteBuffer &buff)
     buff.rpos(buff.wpos());
 
     Sha1Hash sha1;
+	uint8 digest[SHA_DIGEST_LENGTH];
     sha1.UpdateData((uint8*)keyIn, 16);
-    sha1.Finalize();
+    sha1.FinalizeTo(digest);
 
     //const uint8 validHash[20] = { 0x56, 0x8C, 0x05, 0x4C, 0x78, 0x1A, 0x97, 0x2A, 0x60, 0x37, 0xA2, 0x29, 0x0C, 0x22, 0xB5, 0x25, 0x71, 0xA0, 0x6F, 0x4E };
 
     // Verify key
-    if (memcmp(buff.contents() + 1, sha1.GetDigest(), 20) != 0)
+    if (memcmp(buff.contents() + 1, digest, SHA_DIGEST_LENGTH) != 0)
     {
         sLog.outWarden("%s failed hash reply. Action: %s", _session->GetPlayerName(), Penalty().c_str());
         if (sWorld.getConfig(CONFIG_UINT32_WARDEN_CLIENT_FAIL_ACTION) > uint32(WARDEN_ACTION_LOG))
@@ -224,30 +224,30 @@ void WardenMac::HandleData(ByteBuffer &buff)
     std::string str = "Test string!";
 
     Sha1Hash sha1;
+	uint8    digest[SHA_DIGEST_LENGTH];
     sha1.UpdateData(str);
     uint32 magic = 0xFEEDFACE;                              // unsure
     sha1.UpdateData((uint8*)&magic, 4);
-    sha1.Finalize();
+    sha1.FinalizeTo(digest);
 
-    uint8 sha1Hash[20];
+    uint8 sha1Hash[SHA_DIGEST_LENGTH];
     buff.read(sha1Hash, 20);
 
-    if (memcmp(sha1Hash, sha1.GetDigest(), 20) != 0)
+    if (memcmp(sha1Hash, digest, SHA_DIGEST_LENGTH) != 0)
     {
         sLog.outWarden("Handle data failed: SHA1 hash is wrong!");
         found = true;
     }
 
-    MD5_CTX ctx;
-    MD5_Init(&ctx);
-    MD5_Update(&ctx, str.c_str(), str.size());
-    uint8 ourMD5Hash[16];
-    MD5_Final(ourMD5Hash, &ctx);
+    AMD5 md5;
+     md5.UpdateData((uint8*)str.c_str(), str.size());
+    uint8 ourMD5Hash[MD5_DIGEST_LENGTH];
+    md5.FinalizeTo(ourMD5Hash);
 
-    uint8 theirsMD5Hash[16];
-    buff.read(theirsMD5Hash, 16);
+    uint8 theirsMD5Hash[MD5_DIGEST_LENGTH];
+    buff.read(theirsMD5Hash, MD5_DIGEST_LENGTH);
 
-    if (memcmp(ourMD5Hash, theirsMD5Hash, 16) != 0)
+    if (memcmp(ourMD5Hash, theirsMD5Hash, MD5_DIGEST_LENGTH) != 0)
     {
         sLog.outWarden("Handle data failed: MD5 hash is wrong!");
         found = true;

@@ -22,8 +22,8 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-#include "Common.h"
-#include "Log.h"
+#include "Common/Common.h"
+#include "Log/Log.h"
 #include "ObjectMgr.h"
 #include "SpellMgr.h"
 #include "Player.h"
@@ -33,7 +33,7 @@
 #include "Totem.h"
 #include "Creature.h"
 #include "ScriptMgr.h"
-#include "Util.h"
+#include "Utilities/Util.h"
 
 pAuraProcHandler AuraProcHandler[TOTAL_AURAS] =
 {

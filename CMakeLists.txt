@@ -98,7 +98,6 @@ endif()
 
 #find_package(Git)
 
-find_package(OpenSSL REQUIRED)
 find_package(Threads REQUIRED)
 
 if(POSTGRESQL)
@@ -110,6 +109,7 @@ endif()
 find_package(ZLIB  QUIET)
 find_package(BZip2 QUIET)
 
+include(${CMAKE_SOURCE_DIR}/cmake/MangosParams.cmake)
 include(${CMAKE_SOURCE_DIR}/cmake/SetDefinitions.cmake)
 
 if(PCH)

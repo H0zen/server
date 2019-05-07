@@ -23,11 +23,11 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-#include "Common.h"
+#include "Common/Common.h"
 #include "World.h"
-#include "WorldPacket.h"
+#include "Utilities/WorldPacket.h"
 #include "WorldSession.h"
-#include "Log.h"
+#include "Log/Log.h"
 #include "Database/DatabaseEnv.h"
 #include "WardenCheckMgr.h"
 #include "Warden.h"
@@ -96,7 +96,7 @@ void WardenCheckMgr::LoadWardenChecks()
             {
                 uint8 temp[24];
                 memset(temp, 0, len);
-                memcpy(temp, wardenCheck->Data.AsByteArray(), wardenCheck->Data.GetNumBytes());
+                memcpy(temp, wardenCheck->Data.AsByteArray().data(), wardenCheck->Data.GetNumBytes());
                 std::reverse(temp, temp + len);
                 wardenCheck->Data.SetBinary((uint8*)temp, len);
             }
@@ -124,7 +124,7 @@ void WardenCheckMgr::LoadWardenChecks()
             {
                 uint8 *temp = new uint8[len];
                 memset(temp, 0, len);
-                memcpy(temp, wr->Result.AsByteArray(), wr->Result.GetNumBytes());
+                memcpy(temp, wr->Result.AsByteArray().data(), wr->Result.GetNumBytes());
                 std::reverse(temp, temp + len);
                 wr->Result.SetBinary((uint8*)temp, len);
                 delete[] temp;

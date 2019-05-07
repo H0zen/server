@@ -35,11 +35,11 @@
 #include "RAThread.h"
 
 #include "AccountMgr.h"
-#include "Log.h"
+#include "Log/Log.h"
 #include "World.h"
-#include "Util.h"
+#include "Utilities/Util.h"
 #include "Language.h"
-#include "Config.h"
+#include "Config/Config.h"
 #include "ObjectMgr.h"
 
 

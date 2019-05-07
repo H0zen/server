@@ -25,8 +25,8 @@
 #ifndef MANGOS_DBCSTORES_H
 #define MANGOS_DBCSTORES_H
 
-#include "Common.h"
-#include "DBCStore.h"
+#include "Common/Common.h"
+#include "Datastores/DBCStore.h"
 #include "DBCStructure.h"
 
 #include <list>

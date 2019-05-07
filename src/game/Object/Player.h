@@ -25,7 +25,7 @@
 #ifndef MANGOS_H_PLAYER
 #define MANGOS_H_PLAYER
 
-#include "Common.h"
+#include "Common/Common.h"
 #include "ItemPrototype.h"
 #include "Unit.h"
 #include "Item.h"
@@ -37,7 +37,7 @@
 #include "WorldSession.h"
 #include "Pet.h"
 #include "MapReference.h"
-#include "Util.h"                                           // for Tokens typedef
+#include "Utilities/Util.h"                                           // for Tokens typedef
 #include "ReputationMgr.h"
 #include "BattleGround.h"
 #include "DBCStores.h"

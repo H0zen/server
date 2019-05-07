@@ -23,11 +23,11 @@
  */
 
 #include <zlib.h>
-#include "Common.h"
+#include "Common/Common.h"
 #include "UpdateData.h"
-#include "ByteBuffer.h"
-#include "WorldPacket.h"
-#include "Log.h"
+#include "Utilities/ByteBuffer.h"
+#include "Utilities/WorldPacket.h"
+#include "Log/Log.h"
 #include "Opcodes.h"
 #include "World.h"
 #include "ObjectGuid.h"

@@ -26,7 +26,7 @@
 #include <map>
 
 #include "Policies/Singleton.h"
-#include "Common.h"
+#include "Common/Common.h"
 
 #ifndef MANGOSSERVER_LFGMGR_H
 #define MANGOSSERVER_LFGMGR_H

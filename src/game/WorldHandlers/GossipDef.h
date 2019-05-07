@@ -25,7 +25,7 @@
 #ifndef MANGOSSERVER_GOSSIP_H
 #define MANGOSSERVER_GOSSIP_H
 
-#include "Common.h"
+#include "Common/Common.h"
 #include "QuestDef.h"
 #include "NPCHandler.h"
 #include "ObjectGuid.h"

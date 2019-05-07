@@ -24,8 +24,8 @@
 
 #include "Pet.h"
 #include "Database/DatabaseEnv.h"
-#include "Log.h"
-#include "WorldPacket.h"
+#include "Log/Log.h"
+#include "Utilities/WorldPacket.h"
 #include "ObjectMgr.h"
 #include "SpellMgr.h"
 #include "Formulas.h"

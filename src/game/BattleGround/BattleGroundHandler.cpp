@@ -22,10 +22,10 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-#include "Common.h"
-#include "WorldPacket.h"
+#include "Common/Common.h"
+#include "Utilities/WorldPacket.h"
 #include "Opcodes.h"
-#include "Log.h"
+#include "Log/Log.h"
 #include "Player.h"
 #include "ObjectMgr.h"
 #include "WorldSession.h"
@@ -92,8 +92,7 @@ void WorldSession::HandleBattlemasterJoinOpcode(WorldPacket& recv_data)
     uint32 mapId;
     uint8 joinAsGroup;
     bool isPremade = false;
-    Group* grp;
-
+ 
     recv_data >> guid;                                      // battlemaster guid
     recv_data >> mapId;
     recv_data >> instanceId;                                // instance id, 0 if First Available selected
@@ -124,17 +123,21 @@ void WorldSession::HandleBattlemasterJoinOpcode(WorldPacket& recv_data)
         { return; }
 
     // get bg instance or bg template if instance not found
-    BattleGround* bg = NULL;
+    BattleGround* bg = nullptr;
     if (instanceId)
         { bg = sBattleGroundMgr.GetBattleGroundThroughClientInstance(instanceId, bgTypeId); }
 
-    if (!bg && !(bg = sBattleGroundMgr.GetBattleGroundTemplate(bgTypeId)))
-    {
-        sLog.outError("Battleground: no available bg / template found");
-        return;
-    }
-
+	if (bg == nullptr)
+	{
+		bg = sBattleGroundMgr.GetBattleGroundTemplate(bgTypeId);
+		if (bg == nullptr)
+		{
+		    sLog.outError("Battleground: no available bg / template found");
+		    return;
+		}
+	}
     BattleGroundBracketId bgBracketId = _player->GetBattleGroundBracketIdFromLevel(bgTypeId);
+	Group* grp = nullptr;
 
     // check queue conditions
     if (!joinAsGroup)
@@ -172,11 +175,11 @@ void WorldSession::HandleBattlemasterJoinOpcode(WorldPacket& recv_data)
     }
     // if we're here, then the conditions to join a bg are met. We can proceed in joining.
 
-    // _player->GetGroup() was already checked, grp is already initialized
     BattleGroundQueue& bgQueue = sBattleGroundMgr.m_BattleGroundQueues[bgQueueTypeId];
     if (joinAsGroup)
     {
-        DEBUG_LOG("Battleground: the following players are joining as group:");
+		// _player->GetGroup() was already checked, grp is already initialized
+		DEBUG_LOG("Battleground: the following players are joining as group:");
         GroupQueueInfo* ginfo = bgQueue.AddGroup(_player, grp, bgTypeId, bgBracketId, isPremade);
         uint32 avgTime = bgQueue.GetAverageQueueWaitTime(ginfo, _player->GetBattleGroundBracketIdFromLevel(bgTypeId));
         for (GroupReference* itr = grp->GetFirstMember(); itr != NULL; itr = itr->next())
@@ -202,7 +205,8 @@ void WorldSession::HandleBattlemasterJoinOpcode(WorldPacket& recv_data)
     }
     else
     {
-        GroupQueueInfo* ginfo = bgQueue.AddGroup(_player, NULL, bgTypeId, bgBracketId, isPremade);
+		// grp is nullptr in this case
+        GroupQueueInfo* ginfo = bgQueue.AddGroup(_player, grp, bgTypeId, bgBracketId, isPremade);
         uint32 avgTime = bgQueue.GetAverageQueueWaitTime(ginfo, _player->GetBattleGroundBracketIdFromLevel(bgTypeId));
         // already checked if queueSlot is valid, now just get it
         uint32 queueSlot = _player->AddBattleGroundQueueId(bgQueueTypeId);

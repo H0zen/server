@@ -22,7 +22,7 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-#include "Common.h"
+#include "Common/Common.h"
 #include "Database/DatabaseEnv.h"
 #include "World.h"
 #include "Player.h"
@@ -34,7 +34,7 @@
 #include "ScriptMgr.h"
 #include "SystemConfig.h"
 #include "revision.h"
-#include "Util.h"
+#include "Utilities/Util.h"
 
 bool ChatHandler::HandleHelpCommand(char* args)
 {

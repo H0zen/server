@@ -22,24 +22,24 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-#include "Common.h"
+#include "Common/Common.h"
 #include "Database/DatabaseEnv.h"
 #include "DBCStores.h"
-#include "WorldPacket.h"
+#include "Utilities/WorldPacket.h"
 #include "WorldSession.h"
 #include "World.h"
 #include "ObjectMgr.h"
 #include "Player.h"
 #include "Opcodes.h"
 #include "Chat.h"
-#include "Log.h"
+#include "Log/Log.h"
 #include "MapManager.h"
 #include "ObjectAccessor.h"
 #include "Language.h"
 #include "CellImpl.h"
 #include "MapPersistentStateMgr.h"
 #include "Mail.h"
-#include "Util.h"
+#include "Utilities/Util.h"
 #include "SpellMgr.h"
 #ifdef _DEBUG_VMAPS
 #include "VMapFactory.h"

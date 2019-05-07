@@ -22,6 +22,7 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
+#ifdef ENABLE_SOAP
 #include <ace/OS.h>
 #include <ace/Message_Block.h>
 
@@ -242,3 +243,4 @@ struct Namespace namespaces[] =
     { "ns1", "urn:MaNGOS" },     // "ns1" namespace prefix
     { NULL, NULL }
 };
+#endif

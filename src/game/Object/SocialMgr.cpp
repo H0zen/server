@@ -26,11 +26,11 @@
 #include "Policies/Singleton.h"
 #include "Database/DatabaseEnv.h"
 #include "Opcodes.h"
-#include "WorldPacket.h"
+#include "Utilities/WorldPacket.h"
 #include "Player.h"
 #include "ObjectMgr.h"
 #include "World.h"
-#include "Util.h"
+#include "Utilities/Util.h"
 
 INSTANTIATE_SINGLETON_1(SocialMgr);
 

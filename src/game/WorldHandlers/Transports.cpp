@@ -22,7 +22,7 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-#include "Common.h"
+#include "Common/Common.h"
 
 #include "Transports.h"
 #include "Map.h"
@@ -31,9 +31,9 @@
 #include "ObjectGuid.h"
 #include "Path.h"
 
-#include "WorldPacket.h"
+#include "Utilities/WorldPacket.h"
 #include "DBCStores.h"
-#include "ProgressBar.h"
+#include "Utilities/ProgressBar.h"
 
 #include <G3D/Quat.h>
 

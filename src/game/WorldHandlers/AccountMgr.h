@@ -25,7 +25,7 @@
 #ifndef MANGOS_H_ACCMGR
 #define MANGOS_H_ACCMGR
 
-#include "Common.h"
+#include "Common/Common.h"
 
 enum AccountOpResult
 {

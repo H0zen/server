@@ -23,12 +23,13 @@
  */
 
 #include "AuctionHouseBot.h"
-#include "Utils/ProgressBar.h"
+#include "Utilities/ProgressBar.h"
 #include "Log/Log.h"
-#include "Object/ObjectMgr.h"
-#include "Server/SQLStorages.h"
-#include "WorldHandlers/World.h"
-#include "Object/AuctionHouseMgr.h"
+#include "ObjectMgr.h"
+#include "AuctionHouseMgr.h"
+#include "SystemConfig.h"
+#include "SQLStorages.h"
+#include "World.h"
 
 /** \addtogroup auctionbot
  * @{

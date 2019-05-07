@@ -27,8 +27,8 @@
 *  \author Derex <derex101@gmail.com>
 */
 
-#include "Common.h"
-#include "Log.h"
+#include "Common/Common.h"
+#include "Log/Log.h"
 #include "Config/Config.h"
 #include "WorldSocket.h"
 #include "WorldSocketMgr.h"

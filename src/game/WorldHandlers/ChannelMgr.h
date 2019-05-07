@@ -25,7 +25,7 @@
 #ifndef MANGOSSERVER_CHANNELMGR_H
 #define MANGOSSERVER_CHANNELMGR_H
 
-#include "Common.h"
+#include "Common/Common.h"
 #include "Channel.h"
 
 #include <map>

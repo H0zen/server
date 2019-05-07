@@ -22,13 +22,13 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-#include "Common.h"
+#include "Common/Common.h"
 #include "Database/DatabaseEnv.h"
 #include "SQLStorages.h"
 #include "GMTicketMgr.h"
 #include "ObjectMgr.h"
 #include "ObjectGuid.h"
-#include "ProgressBar.h"
+#include "Utilities/ProgressBar.h"
 #include "Policies/Singleton.h"
 #include "Player.h"
 

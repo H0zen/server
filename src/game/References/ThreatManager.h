@@ -25,7 +25,7 @@
 #ifndef _THREATMANAGER
 #define _THREATMANAGER
 
-#include "Common.h"
+#include "Common/Common.h"
 #include "SharedDefines.h"
 #include "Utilities/LinkedReference/Reference.h"
 #include "UnitEvents.h"

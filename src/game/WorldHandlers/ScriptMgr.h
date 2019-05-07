@@ -25,7 +25,7 @@
 #ifndef MANGOS_H_SCRIPTMGR
 #define MANGOS_H_SCRIPTMGR
 
-#include "Common.h"
+#include "Common/Common.h"
 #include "ObjectGuid.h"
 #include "DBCEnums.h"
 #include <ace/Atomic_Op.h>

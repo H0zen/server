@@ -31,7 +31,7 @@
 #include "SpellMgr.h"
 #include "Creature.h"
 #include "World.h"
-#include "Util.h"
+#include "Utilities/Util.h"
 
 int PetAI::Permissible(const Creature* creature)
 {

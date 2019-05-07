@@ -25,7 +25,7 @@
 #ifndef MANGOS_H_BATTLEGROUNDAB
 #define MANGOS_H_BATTLEGROUNDAB
 
-#include "Common.h"
+#include "Common/Common.h"
 #include "BattleGround.h"
 
 /**

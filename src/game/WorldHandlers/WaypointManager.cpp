@@ -26,7 +26,7 @@
 #include "Database/DatabaseEnv.h"
 #include "GridDefines.h"
 #include "Policies/Singleton.h"
-#include "ProgressBar.h"
+#include "Utilities/ProgressBar.h"
 #include "MapManager.h"
 #include "ObjectMgr.h"
 #include "ScriptMgr.h"

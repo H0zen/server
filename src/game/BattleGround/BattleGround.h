@@ -25,10 +25,10 @@
 #ifndef MANGOS_H_BATTLEGROUND
 #define MANGOS_H_BATTLEGROUND
 
-#include "Common.h"
+#include "Common/Common.h"
 #include "SharedDefines.h"
 #include "Map.h"
-#include "ByteBuffer.h"
+#include "Utilities/ByteBuffer.h"
 #include "ObjectGuid.h"
 
 // magic event-numbers

@@ -24,7 +24,7 @@
 
 #include "GridStates.h"
 #include "ObjectGridLoader.h"
-#include "Log.h"
+#include "Log/Log.h"
 
 GridState::~GridState()
 {

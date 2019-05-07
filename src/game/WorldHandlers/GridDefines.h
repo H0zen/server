@@ -25,7 +25,7 @@
 #ifndef MANGOS_GRIDDEFINES_H
 #define MANGOS_GRIDDEFINES_H
 
-#include "Common.h"
+#include "Common/Common.h"
 #include "GameSystem/NGrid.h"
 #include <cmath>
 

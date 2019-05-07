@@ -26,7 +26,7 @@
 #include "MapPersistentStateMgr.h"
 #include "Policies/Singleton.h"
 #include "Database/DatabaseEnv.h"
-#include "Log.h"
+#include "Log/Log.h"
 #include "Transports.h"
 #include "GridDefines.h"
 #include "World.h"

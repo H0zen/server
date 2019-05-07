@@ -28,7 +28,7 @@
 #include "Platform/Define.h"
 #include "Dynamic/FactoryHolder.h"
 #include "MotionMaster.h"
-#include "Timer.h"
+#include "Utilities/Timer.h"
 
 class Unit;
 class Creature;

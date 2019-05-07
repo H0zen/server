@@ -23,7 +23,7 @@
  */
 
 #include "GridNotifiers.h"
-#include "WorldPacket.h"
+#include "Utilities/WorldPacket.h"
 #include "WorldSession.h"
 #include "UpdateData.h"
 #include "Map.h"

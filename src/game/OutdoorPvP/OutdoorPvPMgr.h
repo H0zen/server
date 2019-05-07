@@ -25,8 +25,8 @@
 #ifndef WORLD_PVP_MGR_H
 #define WORLD_PVP_MGR_H
 
-#include "Common.h"
-#include "Timer.h"
+#include "Common/Common.h"
+#include "Utilities/Timer.h"
 
 /**
  * @brief

@@ -25,7 +25,7 @@
 #ifndef MANGOS_H_OBJECTMGR
 #define MANGOS_H_OBJECTMGR
 
-#include "Common.h"
+#include "Common/Common.h"
 #include "Object.h"
 #include "Bag.h"
 #include "Creature.h"

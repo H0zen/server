@@ -25,7 +25,7 @@
 #ifndef WORLD_PVP_EP
 #define WORLD_PVP_EP
 
-#include "Common.h"
+#include "Common/Common.h"
 #include "OutdoorPvP.h"
 #include "Language.h"
 

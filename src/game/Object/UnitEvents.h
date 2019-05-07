@@ -25,7 +25,7 @@
 #ifndef _UNITEVENTS
 #define _UNITEVENTS
 
-#include "Common.h"
+#include "Common/Common.h"
 
 class ThreatContainer;
 class ThreatManager;

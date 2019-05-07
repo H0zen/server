@@ -22,12 +22,12 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-#include "Common.h"
-#include "WorldPacket.h"
+#include "Common/Common.h"
+#include "Utilities/WorldPacket.h"
 #include "WorldSession.h"
 #include "World.h"
 #include "ObjectMgr.h"
-#include "Log.h"
+#include "Log/Log.h"
 #include "Opcodes.h"
 #include "Guild.h"
 #include "GuildMgr.h"

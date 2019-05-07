@@ -22,7 +22,7 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-#include "Common.h"
+#include "Common/Common.h"
 
 #ifndef MANGOS_H_UPDATEFIELDS_AUTO
 #define MANGOS_H_UPDATEFIELDS_AUTO

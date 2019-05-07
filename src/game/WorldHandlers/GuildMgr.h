@@ -25,7 +25,7 @@
 #ifndef MANGOS_H_GUILDMGR
 #define MANGOS_H_GUILDMGR
 
-#include "Common.h"
+#include "Common/Common.h"
 
 class Guild;
 class ObjectGuid;

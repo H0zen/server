@@ -24,8 +24,8 @@
 
 #include "DBCStores.h"
 #include "Policies/Singleton.h"
-#include "Log.h"
-#include "ProgressBar.h"
+#include "Log/Log.h"
+#include "Utilities/ProgressBar.h"
 #include "SharedDefines.h"
 
 #include "DBCfmt.h"

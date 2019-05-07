@@ -22,15 +22,15 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-#include "Common.h"
-#include "ProgressBar.h"
+#include "Common/Common.h"
+#include "Utilities/ProgressBar.h"
 #include "SharedDefines.h"
 #include "Player.h"
 #include "Map.h"
 #include "ObjectMgr.h"
 #include "Chat.h"
 #include "World.h"
-#include "WorldPacket.h"
+#include "Utilities/WorldPacket.h"
 #include "WorldSession.h"
 #include "Language.h"
 #include "Group.h"

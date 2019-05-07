@@ -25,7 +25,7 @@
 #ifndef MANGOS_GAMEEVENT_MGR_H
 #define MANGOS_GAMEEVENT_MGR_H
 
-#include "Common.h"
+#include "Common/Common.h"
 #include "SharedDefines.h"
 #include "Platform/Define.h"
 

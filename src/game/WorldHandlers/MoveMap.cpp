@@ -22,7 +22,7 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-#include "Log.h"
+#include "Log/Log.h"
 #include "World.h"
 #include "Creature.h"
 #include "MoveMap.h"

@@ -26,7 +26,7 @@
 #define MANGOS_H_UPDATEMASK
 
 #include "Errors.h"
-#include "ByteBuffer.h"
+#include "Utilities/ByteBuffer.h"
 
 class UpdateMask
 {

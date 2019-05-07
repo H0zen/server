@@ -27,7 +27,7 @@
 
 #include "Policies/Singleton.h"
 #include "Database/DatabaseEnv.h"
-#include "Util.h"
+#include "Utilities/Util.h"
 #include "ObjectGuid.h"
 #include "WorldSession.h"
 #include "SharedDefines.h"

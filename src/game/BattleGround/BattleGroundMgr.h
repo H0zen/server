@@ -25,7 +25,7 @@
 #ifndef MANGOS_H_BATTLEGROUNDMGR
 #define MANGOS_H_BATTLEGROUNDMGR
 
-#include "Common.h"
+#include "Common/Common.h"
 #include "Policies/Singleton.h"
 #include "BattleGround.h"
 #include <ace/Recursive_Thread_Mutex.h>
@@ -661,7 +661,7 @@ class BattleGroundMgr
             CreatureBattleEventIndexesMap::const_iterator itr = m_CreatureBattleEventIndexMap.find(dbTableGuidLow);
             if (itr != m_CreatureBattleEventIndexMap.end())
                 { return itr->second; }
-            return m_CreatureBattleEventIndexMap.find(-1)->second;
+            return m_CreatureBattleEventIndexMap.find(0xFFFFFFFF)->second;
         }
         /**
          * @brief
@@ -674,7 +674,7 @@ class BattleGroundMgr
             GameObjectBattleEventIndexesMap::const_iterator itr = m_GameObjectBattleEventIndexMap.find(dbTableGuidLow);
             if (itr != m_GameObjectBattleEventIndexMap.end())
                 { return itr->second; }
-            return m_GameObjectBattleEventIndexMap.find(-1)->second;
+            return m_GameObjectBattleEventIndexMap.find(0xFFFFFFFF)->second;
         }
 
         /**

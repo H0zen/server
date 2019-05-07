@@ -22,7 +22,7 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-#include "Common.h"
+#include "Common/Common.h"
 #include "Database/DatabaseEnv.h"
 #include "WorldSession.h"
 #include "World.h"
@@ -33,7 +33,7 @@
 #include "Player.h"
 #include "GameObject.h"
 #include "Chat.h"
-#include "Log.h"
+#include "Log/Log.h"
 #include "Guild.h"
 #include "GuildMgr.h"
 #include "ObjectAccessor.h"
@@ -50,7 +50,7 @@
 #include "SystemConfig.h"
 #include "Config/Config.h"
 #include "Mail.h"
-#include "Util.h"
+#include "Utilities/Util.h"
 #include "ItemEnchantmentMgr.h"
 #include "BattleGround/BattleGroundMgr.h"
 #include "MapPersistentStateMgr.h"

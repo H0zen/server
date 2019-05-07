@@ -23,16 +23,16 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-#include "Common.h"
-#include "WorldPacket.h"
+#include "Common/Common.h"
+#include "Utilities/WorldPacket.h"
 #include "WorldSession.h"
-#include "Log.h"
+#include "Log/Log.h"
 #include "Opcodes.h"
 #include "Player.h"
-#include "ByteBuffer.h"
-#include <openssl/sha.h>
+#include "Utilities/ByteBuffer.h"
+#include "Auth/Sha1.h"
 #include "World.h"
-#include "Util.h"
+#include "Utilities/Util.h"
 #include "Warden.h"
 #include "AccountMgr.h"
 
@@ -181,12 +181,12 @@ void Warden::Update()
 
 void Warden::DecryptData(uint8* buffer, uint32 length)
 {
-    _inputCrypto.UpdateData(length, buffer);
+    _inputCrypto.UpdateData(buffer, length);
 }
 
 void Warden::EncryptData(uint8* buffer, uint32 length)
 {
-    _outputCrypto.UpdateData(length, buffer);
+    _outputCrypto.UpdateData(buffer, length);
 }
 
 void Warden::SetNewState(WardenState::Value state)
@@ -245,7 +245,10 @@ struct keyData {
 uint32 Warden::BuildChecksum(const uint8* data, uint32 length)
 {
     keyData hash;
-    SHA1(data, length, hash.bytes.bytes);
+	Sha1Hash sha1;
+	sha1.Initialize();
+	sha1.UpdateData(data, length);
+	sha1.FinalizeTo(hash.bytes.bytes);
     uint32 checkSum = 0;
     for (uint8 i = 0; i < 5; ++i)
         checkSum = checkSum ^ hash.ints.ints[i];

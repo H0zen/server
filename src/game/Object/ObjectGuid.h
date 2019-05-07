@@ -25,8 +25,8 @@
 #ifndef MANGOS_OBJECT_GUID_H
 #define MANGOS_OBJECT_GUID_H
 
-#include "Common.h"
-#include "ByteBuffer.h"
+#include "Common/Common.h"
+#include "Utilities/ByteBuffer.h"
 
 enum TypeID
 {

@@ -26,14 +26,14 @@
 /// @{
 /// \file
 
-#include "Common.h"
+#include "Common/Common.h"
 #include "Language.h"
-#include "Log.h"
+#include "Log/Log.h"
 #include "World.h"
 #include "ObjectMgr.h"
 #include "WorldSession.h"
 #include "Config/Config.h"
-#include "Util.h"
+#include "Utilities/Util.h"
 #include "AccountMgr.h"
 #include "MapManager.h"
 #include "Player.h"

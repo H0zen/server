@@ -25,7 +25,7 @@
 #ifndef MANGOSSERVER_CHAT_H
 #define MANGOSSERVER_CHAT_H
 
-#include "Common.h"
+#include "Common/Common.h"
 #include "SharedDefines.h"
 #include "ObjectGuid.h"
 

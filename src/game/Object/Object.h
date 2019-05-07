@@ -25,8 +25,8 @@
 #ifndef MANGOS_H_OBJECT
 #define MANGOS_H_OBJECT
 
-#include "Common.h"
-#include "ByteBuffer.h"
+#include "Common/Common.h"
+#include "Utilities/ByteBuffer.h"
 #include "UpdateFields.h"
 #include "UpdateData.h"
 #include "ObjectGuid.h"

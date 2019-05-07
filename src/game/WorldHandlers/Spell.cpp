@@ -24,12 +24,12 @@
 
 #include "Spell.h"
 #include "Database/DatabaseEnv.h"
-#include "WorldPacket.h"
+#include "Utilities/WorldPacket.h"
 #include "WorldSession.h"
 #include "GridNotifiers.h"
 #include "GridNotifiersImpl.h"
 #include "Opcodes.h"
-#include "Log.h"
+#include "Log/Log.h"
 #include "World.h"
 #include "ObjectMgr.h"
 #include "SpellMgr.h"
@@ -46,7 +46,7 @@
 #include "LootMgr.h"
 #include "VMapFactory.h"
 #include "BattleGround/BattleGround.h"
-#include "Util.h"
+#include "Utilities/Util.h"
 #include "Chat.h"
 #include "SQLStorages.h"
 #include "DisableMgr.h"
@@ -5059,7 +5059,7 @@ SpellCastResult Spell::CheckCast(bool strict)
                 Player* plr = m_caster->ToPlayer();
                 if (m_caster->GetPetGuid())                 // let warlock do a replacement summon
                 {
-                    Pet* pet = m_caster->GetPet();
+                    //Pet* pet = m_caster->GetPet();
 
                     if (plr && m_caster->getClass() != CLASS_WARLOCK)
                         { return SPELL_FAILED_ALREADY_HAVE_SUMMON; }
@@ -5580,10 +5580,10 @@ SpellCastResult Spell::CheckRange(bool strict)
                     { return SPELL_CAST_OK; }
 
                 float range_mod = strict ? 0.0f : 5.0f;
-                float base = ATTACK_DISTANCE;
+                
                 if (Player* modOwner = m_caster->GetSpellModOwner())
                 {
-                    float base = ATTACK_DISTANCE;
+					float base = ATTACK_DISTANCE;
                     range_mod += modOwner->ApplySpellMod(m_spellInfo->Id, SPELLMOD_RANGE, base, this);
                 }
 

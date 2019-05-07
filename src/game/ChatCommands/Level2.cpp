@@ -22,7 +22,7 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-#include "Common.h"
+#include "Common/Common.h"
 #include "Database/DatabaseEnv.h"
 #include "ObjectMgr.h"
 #include "ObjectGuid.h"
@@ -46,7 +46,7 @@
 #include "GMTicketMgr.h"
 #include "WaypointManager.h"
 #include "DBCStores.h"
-#include "Util.h"
+#include "Utilities/Util.h"
 #include "GridNotifiers.h"
 #include "GridNotifiersImpl.h"
 #include "CellImpl.h"

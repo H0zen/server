@@ -25,6 +25,7 @@
 #ifndef MANGOS_H_SOAPTHREAD
 #define MANGOS_H_SOAPTHREAD
 
+#ifdef ENABLE_SOAP
 #include <ace/Task.h>
 
 #include "Common.h"
@@ -49,5 +50,6 @@ class SoapThread: public ACE_Task_Base
         SoapPool     *pool_;
         struct soap  soap_;
 };
+#endif
 
 #endif

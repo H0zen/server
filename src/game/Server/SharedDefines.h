@@ -25,7 +25,7 @@
 #ifndef MANGOS_SHAREDDEFINES_H
 #define MANGOS_SHAREDDEFINES_H
 
-#include "Common/Common.h"
+#include "Platform/Define.h"
 
 #ifndef MANGOS
 #define MANGOS

@@ -29,7 +29,7 @@
 #include "Creature.h"
 #include "Map.h"
 #include "PathFinder.h"
-#include "Log.h"
+#include "Log/Log.h"
 
 ////////////////// PathFinder //////////////////
 PathFinder::PathFinder(const Unit* owner) :

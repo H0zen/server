@@ -29,8 +29,8 @@
 #ifndef MANGOS_H_WORLD
 #define MANGOS_H_WORLD
 
-#include "Common.h"
-#include "Timer.h"
+#include "Common/Common.h"
+#include "Utilities/Timer.h"
 #include "Policies/Singleton.h"
 #include "SharedDefines.h"
 

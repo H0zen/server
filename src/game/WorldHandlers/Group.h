@@ -25,7 +25,7 @@
 #ifndef MANGOSSERVER_GROUP_H
 #define MANGOSSERVER_GROUP_H
 
-#include "Common.h"
+#include "Common/Common.h"
 #include "ObjectGuid.h"
 #include "GroupReference.h"
 #include "GroupRefManager.h"

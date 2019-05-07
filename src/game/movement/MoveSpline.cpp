@@ -24,7 +24,7 @@
 
 #include "MoveSpline.h"
 #include <sstream>
-#include "Log.h"
+#include "Log/Log.h"
 #include "Unit.h"
 
 namespace Movement
