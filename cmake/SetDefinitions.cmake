@@ -97,6 +97,11 @@ endif ()
 # GCC and Clang compiler options
 if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU" OR "${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
     set(DEFAULT_COMPILE_OPTS ${DEFAULT_COMPILE_OPTS}
+        $<$<EQUAL:${PLATFORM},32>:
+            -msse2
+            -mfpmath=sse
+        >
+
         -Wall
         -Wextra
         -Wunused
@@ -108,23 +113,26 @@ if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU" OR "${CMAKE_CXX_COMPILER_ID}" MATCH
         -Wswitch-default
         -Wuninitialized
         -Wmissing-field-initializers
-#        -Wno-ignored-attributes
 
-        $<$<EQUAL:${PLATFORM},32>:
-            -msse2
-            -mfpmath=sse
-        >
+        $<$<CONFIG:Release>:
+            -Wno-unused-parameter
+            -Wno-unused-private-field
+            -Wno-unused-variable
+            -Wno-overloaded-virtual
 
-        $<$<CXX_COMPILER_ID:GNU>:
-            -Wmaybe-uninitialized
-            $<$<VERSION_GREATER:$<CXX_COMPILER_VERSION>,4.8>:
-                -Wpedantic
-                -Wreturn-local-addr
+            $<$<CXX_COMPILER_ID:GNU>:
+                -Wmaybe-uninitialized
+                $<$<VERSION_GREATER:$<CXX_COMPILER_VERSION>,4.8>:
+                    -Wpedantic
+                    -Wreturn-local-addr
+                >
             >
-        >
-        $<$<CXX_COMPILER_ID:Clang>:
-            -Wpedantic
-            -fdelayed-template-parsing
+            $<$<CXX_COMPILER_ID:Clang>:
+                -Wpedantic
+                -fdelayed-template-parsing
+                -Wno-empty-translation-unit
+                -Wno-nested-anon-types
+            >
         >
     )
 endif ()

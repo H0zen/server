@@ -134,7 +134,7 @@ void CliThread::cli_shutdown()
         b.Event.KeyEvent.wVirtualScanCode = 0x1c;
 
         DWORD numb = 0;
-        WriteConsoleInput(hStdIn, &b, 1, &numb);
+        BOOL ret = WriteConsoleInput(hStdIn, &b, 1, &numb);
 
         wait();
 #endif

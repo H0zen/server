@@ -29,9 +29,9 @@
 #ifndef MANGOS_H_WEATHER
 #define MANGOS_H_WEATHER
 
-#include "Common/Common.h"
+#include "Common.h"
 #include "SharedDefines.h"
-#include "Utilities/Timer.h"
+#include "Timer.h"
 
 class Player;
 class Map;

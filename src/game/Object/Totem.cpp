@@ -23,7 +23,7 @@
  */
 
 #include "Totem.h"
-#include "Log/Log.h"
+#include "Log.h"
 #include "Group.h"
 #include "Player.h"
 #include "ObjectMgr.h"

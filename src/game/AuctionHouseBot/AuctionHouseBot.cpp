@@ -23,8 +23,8 @@
  */
 
 #include "AuctionHouseBot.h"
-#include "Utilities/ProgressBar.h"
-#include "Log/Log.h"
+#include "ProgressBar.h"
+#include "Log.h"
 #include "ObjectMgr.h"
 #include "AuctionHouseMgr.h"
 #include "SystemConfig.h"

@@ -22,9 +22,9 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-#include "Common/Common.h"
-#include "Log/Log.h"
-#include "Utilities/WorldPacket.h"
+#include "Common.h"
+#include "Log.h"
+#include "WorldPacket.h"
 #include "WorldSession.h"
 #include "World.h"
 #include "Opcodes.h"
@@ -37,7 +37,7 @@
 #include "Player.h"
 #include "SpellAuras.h"
 #include "Language.h"
-#include "Utilities/Util.h"
+#include "Util.h"
 #include "GridNotifiersImpl.h"
 #include "CellImpl.h"
 #ifdef ENABLE_ELUNA

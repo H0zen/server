@@ -30,7 +30,7 @@
 #include "MovementGenerator.h"
 #include "ScriptMgr.h"
 #include "Pet.h"
-#include "Log/Log.h"
+#include "Log.h"
 
 INSTANTIATE_SINGLETON_1(CreatureAIRegistry);
 INSTANTIATE_SINGLETON_1(MovementGeneratorRegistry);

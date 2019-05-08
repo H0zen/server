@@ -24,11 +24,11 @@
 
 #include "GuildMgr.h"
 #include "Guild.h"
-#include "Log/Log.h"
+#include "Log.h"
 #include "ObjectGuid.h"
 #include "Database/DatabaseEnv.h"
 #include "Policies/Singleton.h"
-#include "Utilities/ProgressBar.h"
+#include "ProgressBar.h"
 #include "World.h"
 
 INSTANTIATE_SINGLETON_1(GuildMgr);

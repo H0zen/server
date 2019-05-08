@@ -25,20 +25,20 @@
 
 #include "HMACSHA1.h"
 #include "WardenKeyGeneration.h"
-#include "Common/Common.h"
-#include "Utilities/WorldPacket.h"
+#include "Common.h"
+#include "WorldPacket.h"
 #include "WorldSession.h"
-#include "Log/Log.h"
+#include "Log.h"
 #include "Opcodes.h"
-#include "Utilities/ByteBuffer.h"
+#include "ByteBuffer.h"
+#include <openssl/md5.h>
 #include "Database/DatabaseEnv.h"
 #include "World.h"
 #include "Player.h"
-#include "Utilities/Util.h"
+#include "Util.h"
 #include "WardenWin.h"
 #include "WardenModuleWin.h"
 #include "WardenCheckMgr.h"
-#include "Auth/md5.h"
 
 WardenWin::WardenWin() : Warden(), _serverTicks(0) {}
 
@@ -48,7 +48,7 @@ void WardenWin::Init(WorldSession* session, BigNumber* k)
 {
     _session = session;
     // Generate Warden Key
-    SHA1Randx WK(k);
+    SHA1Randx WK(k->AsByteArray(), k->GetNumBytes());
     WK.Generate(_inputKey, 16);
     WK.Generate(_outputKey, 16);
 
@@ -82,9 +82,10 @@ ClientWardenModule* WardenWin::GetModuleForClient()
     memcpy(mod->Key, Module.ModuleKey, 16);
 
     // md5 hash
-	AMD5 md5;
-    md5.UpdateData(mod->CompressedData, length);
-    md5.FinalizeTo((uint8*)&mod->Id);
+    MD5_CTX ctx;
+    MD5_Init(&ctx);
+    MD5_Update(&ctx, mod->CompressedData, length);
+    MD5_Final((uint8*)&mod->Id, &ctx);
 
     return mod;
 }
@@ -254,7 +255,7 @@ void WardenWin::RequestData()
             case PAGE_CHECK_A:
             case PAGE_CHECK_B:
             {
-                buff.append(wd->Data.AsByteArray(0, false).data(), wd->Data.GetNumBytes());
+                buff.append(wd->Data.AsByteArray(0, false), wd->Data.GetNumBytes());
                 buff << uint32(wd->Address);
                 buff << uint8(wd->Length);
                 break;
@@ -267,7 +268,7 @@ void WardenWin::RequestData()
             }
             case DRIVER_CHECK:
             {
-                buff.append(wd->Data.AsByteArray(0, false).data(), wd->Data.GetNumBytes());
+                buff.append(wd->Data.AsByteArray(0, false), wd->Data.GetNumBytes());
                 buff << uint8(index++);
                 break;
             }
@@ -376,7 +377,7 @@ void WardenWin::HandleData(ByteBuffer &buff)
                     checkFailed = *itr;
                     continue;
                 }
-                if (memcmp(buff.contents() + buff.rpos(), rs->Result.AsByteArray(0, false).data(), rd->Length) != 0)
+                if (memcmp(buff.contents() + buff.rpos(), rs->Result.AsByteArray(0, false), rd->Length) != 0)
                 {
                     sLog.outWarden("RESULT MEM_CHECK fail CheckId %u account Id %u", *itr, _session->GetAccountId());
                     checkFailed = *itr;
@@ -455,15 +456,15 @@ void WardenWin::HandleData(ByteBuffer &buff)
                     continue;
                 }
 
-                if (memcmp(buff.contents() + buff.rpos(), rs->Result.AsByteArray(0, false).data(), SHA_DIGEST_LENGTH) != 0) // SHA1
+                if (memcmp(buff.contents() + buff.rpos(), rs->Result.AsByteArray(0, false), 20) != 0) // SHA1
                 {
                     sLog.outWarden("RESULT MPQ_CHECK fail, CheckId %u account Id %u", *itr, _session->GetAccountId());
                     checkFailed = *itr;
-                    buff.rpos(buff.rpos() + SHA_DIGEST_LENGTH);            // 20 bytes SHA1
+                    buff.rpos(buff.rpos() + 20);            // 20 bytes SHA1
                     continue;
                 }
 
-                buff.rpos(buff.rpos() + SHA_DIGEST_LENGTH);                // 20 bytes SHA1
+                buff.rpos(buff.rpos() + 20);                // 20 bytes SHA1
                 sLog.outWarden("RESULT MPQ_CHECK passed, CheckId %u account Id %u", *itr, _session->GetAccountId());
                 break;
             }

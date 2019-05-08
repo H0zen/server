@@ -25,7 +25,7 @@
 #include "SpellMgr.h"
 #include "ObjectMgr.h"
 #include "SpellAuraDefines.h"
-#include "Utilities/ProgressBar.h"
+#include "ProgressBar.h"
 #include "DBCStores.h"
 #include "SQLStorages.h"
 #include "Chat.h"

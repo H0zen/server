@@ -40,7 +40,7 @@
 
 #include "CreatureLinkingMgr.h"
 #include "Policies/Singleton.h"
-#include "Utilities/ProgressBar.h"
+#include "ProgressBar.h"
 #include "Database/DatabaseEnv.h"
 #include "ObjectMgr.h"
 #include "SharedDefines.h"

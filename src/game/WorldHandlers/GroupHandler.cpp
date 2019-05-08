@@ -22,18 +22,18 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-#include "Common/Common.h"
+#include "Common.h"
 #include "Database/DatabaseEnv.h"
 #include "Opcodes.h"
-#include "Log/Log.h"
-#include "Utilities/WorldPacket.h"
+#include "Log.h"
+#include "WorldPacket.h"
 #include "WorldSession.h"
 #include "World.h"
 #include "ObjectMgr.h"
 #include "Player.h"
 #include "Group.h"
 #include "SocialMgr.h"
-#include "Utilities/Util.h"
+#include "Util.h"
 
 /* differences from off:
     -you can uninvite yourself - is is useful

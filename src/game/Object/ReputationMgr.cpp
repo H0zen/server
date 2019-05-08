@@ -25,7 +25,7 @@
 #include "ReputationMgr.h"
 #include "DBCStores.h"
 #include "Player.h"
-#include "Utilities/WorldPacket.h"
+#include "WorldPacket.h"
 #include "ObjectMgr.h"
 #ifdef ENABLE_ELUNA
 #include "LuaEngine.h"

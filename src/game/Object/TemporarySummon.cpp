@@ -23,7 +23,7 @@
  */
 
 #include "TemporarySummon.h"
-#include "Log/Log.h"
+#include "Log.h"
 #include "CreatureAI.h"
 
 TemporarySummon::TemporarySummon(ObjectGuid summoner) :

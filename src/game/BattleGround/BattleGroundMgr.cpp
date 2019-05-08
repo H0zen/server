@@ -22,7 +22,7 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-#include "Common/Common.h"
+#include "Common.h"
 #include "SharedDefines.h"
 #include "Player.h"
 #include "BattleGroundMgr.h"
@@ -32,10 +32,10 @@
 #include "MapManager.h"
 #include "Map.h"
 #include "ObjectMgr.h"
-#include "Utilities/ProgressBar.h"
+#include "ProgressBar.h"
 #include "Chat.h"
 #include "World.h"
-#include "Utilities/WorldPacket.h"
+#include "WorldPacket.h"
 #include "Language.h"
 #include "GameEventMgr.h"
 #include "DisableMgr.h"
@@ -1427,9 +1427,9 @@ void BattleGroundMgr::LoadBattleEventIndexes()
     events.event1 = BG_EVENT_NONE;
     events.event2 = BG_EVENT_NONE;
     m_GameObjectBattleEventIndexMap.clear();             // need for reload case
-    m_GameObjectBattleEventIndexMap[0xFFFFFFFF] = events;
+    m_GameObjectBattleEventIndexMap[-1] = events;
     m_CreatureBattleEventIndexMap.clear();               // need for reload case
-    m_CreatureBattleEventIndexMap[0xFFFFFFFF] = events;
+    m_CreatureBattleEventIndexMap[-1] = events;
 
     uint32 count = 0;
 

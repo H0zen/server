@@ -29,7 +29,7 @@
 #include "GameObject.h"
 #include "ObjectMgr.h"
 #include "BattleGroundMgr.h"
-#include "Utilities/WorldPacket.h"
+#include "WorldPacket.h"
 #include "Language.h"
 
 BattleGroundWS::BattleGroundWS()

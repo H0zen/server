@@ -26,7 +26,7 @@
 #define MANGOS_AGGRESSORAI_H
 
 #include "CreatureAI.h"
-#include "Utilities/Timer.h"
+#include "Timer.h"
 #include "ObjectGuid.h"
 
 class Creature;

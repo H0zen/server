@@ -17,48 +17,76 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-project(mangosd VERSION 0.22.0)
 
-set(EXECUTABLE_SRCS
-    AFThread.cpp
-    AFThread.h
-    CliThread.cpp
-    CliThread.h
-    mangosd.cpp
-    mangosd.ico
-    RAThread.cpp
-    RAThread.h
-    SOAP/SoapThread.cpp
-    SOAP/SoapThread.h
-    WorldThread.cpp
-    WorldThread.h
+#Main Files
+set(SRC_GRP_MAIN
+  AFThread.cpp
+  AFThread.h
+  CliThread.cpp
+  CliThread.h
+  RAThread.cpp
+  RAThread.h
+  WorldThread.cpp
+  WorldThread.h
+  mangosd.cpp
 )
+source_group("Main" FILES ${SRC_GRP_MAIN})
+
+set(SRC_GRP_SOAP
+  SOAP/SoapThread.cpp
+  SOAP/SoapThread.h
+)
+source_group("SOAP" FILES ${SRC_GRP_SOAP})
 
 if(WIN32)
-    set(PRODUCT_ICON mangosd.ico)
-    set(PRODUCT_FILE_DESCRIPTION "Mangos Zero Server Daemon")
-    configure_file(VersionInfo.in ${CMAKE_CURRENT_BINARY_DIR}/VersionInfo.h)
-
-    # add resource file to windows build
-    set(EXECUTABLE_SRCS ${EXECUTABLE_SRCS} VersionResource.rc ${CMAKE_CURRENT_BINARY_DIR}/VersionInfo.h)
+    set(PRODUCT_NAME "mangosd.exe")
+    set(PRODUCT_ICON ${CMAKE_CURRENT_SOURCE_DIR}/mangosd.ico)
+    set(PRODUCT_COMPANY_NAME "getmangos.eu")
+    set(PRODUCT_FILE_DESCRIPTION "${MANGOS_PKG} Server Daemon")
+    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/VersionInfo.h.in ${CMAKE_CURRENT_BINARY_DIR}/VersionInfo.h)
 endif()
 
 
-add_executable(mangosd ${EXECUTABLE_SRCS})
+add_executable(mangosd
+    ${SRC_GRP_MAIN}
+    $<$<BOOL:${SOAP}>:${SRC_GRP_SOAP}>
+    $<$<BOOL:${WIN32}>:
+        ${CMAKE_CURRENT_BINARY_DIR}/VersionInfo.h
+        VersionResource.rc
+    >
+)
+
+
+target_include_directories(mangosd
+    PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}
+        ${CMAKE_CURRENT_BINARY_DIR}
+)
 
 target_link_libraries(mangosd
     PUBLIC
         game
-		$<$<BOOL:${PLAYERBOTS}>:Bots>
+        $<$<BOOL:${SOAP}>:gsoap>
         $<$<BOOL:${SCRIPT_LIB_ELUNA}>:Eluna>
-		Threads::Threads
+        $<$<BOOL:${PLAYERBOTS}>:Bots>
+        Threads::Threads
 )
 
-install(TARGETS mangosd DESTINATION ${BIN_DIR})
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/mangosd.conf.dist.in ${CMAKE_CURRENT_BINARY_DIR}/mangosd.conf.dist)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/mangosd.conf.dist DESTINATION ${CONF_INSTALL_DIR})
+install(
+    TARGETS mangosd
+    DESTINATION ${BIN_DIR}
+)
 
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/mangosd.conf.dist.in ${CMAKE_CURRENT_BINARY_DIR}/mangosd.conf.dist)
+install(
+    FILES ${CMAKE_CURRENT_BINARY_DIR}/mangosd.conf.dist
+    DESTINATION ${CONF_INSTALL_DIR}
+)
 
 if(WIN32 AND MSVC)
-    install(FILES $<TARGET_PDB_FILE:mangosd> DESTINATION ${BIN_DIR} OPTIONAL)
+    install(
+        FILES $<TARGET_PDB_FILE:mangosd>
+        DESTINATION ${BIN_DIR}
+        OPTIONAL
+        )
 endif()

@@ -25,11 +25,11 @@
 #include "Player.h"
 #include "Language.h"
 #include "Database/DatabaseEnv.h"
-#include "Log/Log.h"
+#include "Log.h"
 #include "Opcodes.h"
 #include "SpellMgr.h"
 #include "World.h"
-#include "Utilities/WorldPacket.h"
+#include "WorldPacket.h"
 #include "WorldSession.h"
 #include "UpdateMask.h"
 #include "QuestDef.h"
@@ -50,7 +50,7 @@
 #include "Guild.h"
 #include "GuildMgr.h"
 #include "Pet.h"
-#include "Utilities/Util.h"
+#include "Util.h"
 #include "Transports.h"
 #include "Weather.h"
 #include "BattleGround/BattleGround.h"
@@ -1115,6 +1115,8 @@ DrunkenState Player::GetDrunkenstateByValue(uint16 value)
 
 void Player::SetDrunkValue(uint16 newDrunkenValue, uint32 /*itemId*/)
 {
+    uint32 oldDrunkenState = Player::GetDrunkenstateByValue(m_drunk);
+
     m_drunk = newDrunkenValue;
     SetUInt16Value(PLAYER_BYTES_3, 0, uint16(getGender()) | (m_drunk & 0xFFFE));
 
@@ -6164,7 +6166,7 @@ uint32 Player::CalculateTotalKills(Unit* Victim, uint32 fromDate, uint32 toDate)
 // How much honor Player gains/loses killing uVictim
 bool Player::RewardHonor(Unit* uVictim, uint32 groupsize)
 {
-    //float honor_points = 0;
+    float honor_points = 0;
     //int kill_type = 0;
 
     DETAIL_LOG("PLAYER: RewardHonor");
@@ -15276,25 +15278,21 @@ DungeonPersistentState* Player::GetBoundInstanceSaveForSelfOrGroup(uint32 mapid)
 {
     MapEntry const* mapEntry = sMapStore.LookupEntry(mapid);
     if (!mapEntry)
-        { return nullptr; }
+        { return NULL; }
 
     InstancePlayerBind* pBind = GetBoundInstance(mapid);
-    DungeonPersistentState* state = pBind ? pBind->state : nullptr;
+    DungeonPersistentState* state = pBind ? pBind->state : NULL;
 
     // the player's permanent player bind is taken into consideration first
     // then the player's group bind and finally the solo bind.
-	if (!pBind || !pBind->perm)
-	{
-		if (Group* group = GetGroup())
-		{
-			InstanceGroupBind* groupBind = group->GetBoundInstance(mapid);
-			if (nullptr != groupBind)
-			{
-				state = groupBind->state;
-			}
+    if (!pBind || !pBind->perm)
+    {
+        InstanceGroupBind* groupBind = NULL;
+        if (Group* group = GetGroup())
+            if ((groupBind = group->GetBoundInstance(mapid)))
+                { state = groupBind->state; }
+    }
 
-		}
-	}
     return state;
 }
 

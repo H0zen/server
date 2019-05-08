@@ -22,12 +22,12 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-#include "Common/Common.h"
+#include "Common.h"
 #include "CharacterDatabaseCleaner.h"
 #include "World.h"
 #include "Database/DatabaseEnv.h"
 #include "DBCStores.h"
-#include "Utilities/ProgressBar.h"
+#include "ProgressBar.h"
 
 void CharacterDatabaseCleaner::CleanDatabase()
 {

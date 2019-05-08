@@ -28,7 +28,7 @@
 #include "World.h"
 #include "DBCStores.h"
 #include "Map.h"
-#include "Log/Log.h"
+#include "Log.h"
 
 int AggressorAI::Permissible(const Creature* creature)
 {

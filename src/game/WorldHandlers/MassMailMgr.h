@@ -42,7 +42,7 @@
 
 #include <memory>
 
-#include "Common/Common.h"
+#include "Common.h"
 #include "Mail.h"
 
 /**

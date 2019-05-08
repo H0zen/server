@@ -25,7 +25,7 @@
 #ifndef MANGOS_H_SPELL
 #define MANGOS_H_SPELL
 
-#include "Common/Common.h"
+#include "Common.h"
 #include "GridDefines.h"
 #include "SharedDefines.h"
 #include "DBCEnums.h"

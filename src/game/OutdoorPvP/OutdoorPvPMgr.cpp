@@ -26,7 +26,7 @@
 #include "Policies/Singleton.h"
 #include "OutdoorPvP.h"
 #include "World.h"
-#include "Log/Log.h"
+#include "Log.h"
 #include "OutdoorPvPEP.h"
 #include "OutdoorPvPSI.h"
 #include "DisableMgr.h"

@@ -22,11 +22,11 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-#include "Common/Common.h"
+#include "Common.h"
 #include "Opcodes.h"
-#include "Log/Log.h"
+#include "Log.h"
 #include "Player.h"
-#include "Utilities/WorldPacket.h"
+#include "WorldPacket.h"
 #include "WorldSession.h"
 
 void WorldSession::HandleLearnTalentOpcode(WorldPacket& recv_data)

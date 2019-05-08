@@ -23,7 +23,7 @@
  */
 
 #include "OutdoorPvPEP.h"
-#include "Utilities/WorldPacket.h"
+#include "WorldPacket.h"
 #include "World.h"
 #include "ObjectMgr.h"
 #include "Object.h"

@@ -25,8 +25,8 @@
 #ifndef MANGOS_OBJECT_GUID_H
 #define MANGOS_OBJECT_GUID_H
 
-#include "Common/Common.h"
-#include "Utilities/ByteBuffer.h"
+#include "Common.h"
+#include "ByteBuffer.h"
 
 enum TypeID
 {
@@ -251,7 +251,7 @@ inline PackedGuid ObjectGuid::WriteAsPacked() const { return PackedGuid(*this); 
 HASH_NAMESPACE_START
 
 template<>
-class hash<ObjectGuid>
+struct hash<ObjectGuid>
 {
     public:
 

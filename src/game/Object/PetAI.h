@@ -27,7 +27,7 @@
 
 #include "CreatureAI.h"
 #include "ObjectGuid.h"
-#include "Utilities/Timer.h"
+#include "Timer.h"
 
 class Creature;
 class Spell;

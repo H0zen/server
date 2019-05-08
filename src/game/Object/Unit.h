@@ -30,7 +30,7 @@
 #ifndef MANGOS_H_UNIT
 #define MANGOS_H_UNIT
 
-#include "Common/Common.h"
+#include "Common.h"
 #include "Object.h"
 #include "Opcodes.h"
 #include "SpellAuraDefines.h"
@@ -43,9 +43,9 @@
 #include "Utilities/EventProcessor.h"
 #include "MotionMaster.h"
 #include "DBCStructure.h"
-#include "Utilities/WorldPacket.h"
-#include "Utilities/Timer.h"
-#include "Log/Log.h"
+#include "WorldPacket.h"
+#include "Timer.h"
+#include "Log.h"
 
 #include <list>
 

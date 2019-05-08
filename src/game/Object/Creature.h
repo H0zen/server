@@ -25,7 +25,7 @@
 #ifndef MANGOSSERVER_CREATURE_H
 #define MANGOSSERVER_CREATURE_H
 
-#include "Common/Common.h"
+#include "Common.h"
 #include "Unit.h"
 #include "SharedDefines.h"
 #include "LootMgr.h"

@@ -25,7 +25,7 @@
 #ifndef MANGOS_MOTIONMASTER_H
 #define MANGOS_MOTIONMASTER_H
 
-#include "Common/Common.h"
+#include "Common.h"
 #include <stack>
 #include <vector>
 

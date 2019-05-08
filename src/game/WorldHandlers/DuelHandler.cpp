@@ -22,10 +22,10 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-#include "Common/Common.h"
-#include "Utilities/WorldPacket.h"
+#include "Common.h"
+#include "WorldPacket.h"
 #include "WorldSession.h"
-#include "Log/Log.h"
+#include "Log.h"
 #include "Player.h"
 
 void WorldSession::HandleDuelAcceptedOpcode(WorldPacket& recvPacket)

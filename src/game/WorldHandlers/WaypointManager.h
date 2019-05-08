@@ -25,7 +25,7 @@
 #ifndef MANGOS_WAYPOINTMANAGER_H
 #define MANGOS_WAYPOINTMANAGER_H
 
-#include "Common/Common.h"
+#include "Common.h"
 #include "Utilities/UnorderedMapSet.h"
 
 enum WaypointPathOrigin

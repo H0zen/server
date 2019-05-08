@@ -23,9 +23,9 @@
  */
 
 #include "MapUpdater.h"
-
+#include "DelayExecutor.h"
 #include "Map.h"
-#include "Database/DatabaseEnv.h"
+#include "DatabaseEnv.h"
 
 #include <ace/Guard_T.h>
 #include <ace/Method_Request.h>
@@ -65,7 +65,7 @@ MapUpdater::~MapUpdater()
 
 int MapUpdater::activate(size_t num_threads)
 {
-    return m_executor.activate((int)num_threads);
+    return m_executor._activate((int)num_threads);
 }
 
 int MapUpdater::deactivate()

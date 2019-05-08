@@ -25,7 +25,7 @@
 #ifndef MANGOS_MAP_H
 #define MANGOS_MAP_H
 
-#include "Common/Common.h"
+#include "Common.h"
 #include "Platform/Define.h"
 #include "Policies/ThreadingModel.h"
 #include <ace/RW_Thread_Mutex.h>

@@ -23,9 +23,9 @@
  */
 
 #include "Unit.h"
-#include "Log/Log.h"
+#include "Log.h"
 #include "Opcodes.h"
-#include "Utilities/WorldPacket.h"
+#include "WorldPacket.h"
 #include "WorldSession.h"
 #include "World.h"
 #include "ObjectMgr.h"
@@ -40,7 +40,7 @@
 #include "CreatureAI.h"
 #include "TemporarySummon.h"
 #include "Pet.h"
-#include "Utilities/Util.h"
+#include "Util.h"
 #include "Totem.h"
 #include "BattleGround/BattleGround.h"
 #include "InstanceData.h"

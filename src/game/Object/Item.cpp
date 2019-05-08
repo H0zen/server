@@ -25,7 +25,7 @@
 #include "Item.h"
 #include "ObjectMgr.h"
 #include "ObjectGuid.h"
-#include "Utilities/WorldPacket.h"
+#include "WorldPacket.h"
 #include "Database/DatabaseEnv.h"
 #include "ItemEnchantmentMgr.h"
 #include "SQLStorages.h"

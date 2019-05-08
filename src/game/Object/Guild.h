@@ -25,7 +25,7 @@
 #ifndef MANGOSSERVER_GUILD_H
 #define MANGOSSERVER_GUILD_H
 
-#include "Common/Common.h"
+#include "Common.h"
 #include "Item.h"
 #include "ObjectAccessor.h"
 #include "SharedDefines.h"

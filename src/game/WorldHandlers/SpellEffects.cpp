@@ -22,11 +22,11 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-#include "Common/Common.h"
+#include "Common.h"
 #include "Database/DatabaseEnv.h"
-#include "Utilities/WorldPacket.h"
+#include "WorldPacket.h"
 #include "Opcodes.h"
-#include "Log/Log.h"
+#include "Log.h"
 #include "World.h"
 #include "ObjectMgr.h"
 #include "SpellMgr.h"
@@ -48,7 +48,7 @@
 #include "BattleGround/BattleGroundWS.h"
 #include "Language.h"
 #include "SocialMgr.h"
-#include "Utilities/Util.h"
+#include "Util.h"
 #include "TemporarySummon.h"
 #include "ScriptMgr.h"
 #include "G3D/Vector3.h"

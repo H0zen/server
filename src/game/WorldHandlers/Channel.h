@@ -25,9 +25,9 @@
 #ifndef MANGOS_H_CHANNEL
 #define MANGOS_H_CHANNEL
 
-#include "Common/Common.h"
+#include "Common.h"
 #include "ObjectGuid.h"
-#include "Utilities/WorldPacket.h"
+#include "WorldPacket.h"
 #include "Player.h"
 
 #include <map>

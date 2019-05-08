@@ -17,337 +17,98 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-set(LIBRARY_SRCS
-    AuctionHouseBot/ahbot.conf.dist.in
-    AuctionHouseBot/AuctionHouseBot.cpp
-    AuctionHouseBot/AuctionHouseBot.h
-    BattleGround/BattleGround.cpp
-    BattleGround/BattleGround.h
-    BattleGround/BattleGroundAB.cpp
-    BattleGround/BattleGroundAB.h
-    BattleGround/BattleGroundAV.cpp
-    BattleGround/BattleGroundAV.h
-    BattleGround/BattleGroundHandler.cpp
-    BattleGround/BattleGroundMgr.cpp
-    BattleGround/BattleGroundMgr.h
-    BattleGround/BattleGroundWS.cpp
-    BattleGround/BattleGroundWS.h
-    ChatCommands/debugcmds.cpp
-    ChatCommands/Level0.cpp
-    ChatCommands/Level1.cpp
-    ChatCommands/Level2.cpp
-    ChatCommands/Level3.cpp
-    ChatCommands/Level4.cpp
-    Maps/MapUpdater.cpp
-    Maps/MapUpdater.h
-    MotionGenerators/ConfusedMovementGenerator.cpp
-    MotionGenerators/ConfusedMovementGenerator.h
-    MotionGenerators/FleeingMovementGenerator.cpp
-    MotionGenerators/FleeingMovementGenerator.h
-    MotionGenerators/HomeMovementGenerator.cpp
-    MotionGenerators/HomeMovementGenerator.h
-    MotionGenerators/IdleMovementGenerator.cpp
-    MotionGenerators/IdleMovementGenerator.h
-    MotionGenerators/MotionMaster.cpp
-    MotionGenerators/MotionMaster.h
-    MotionGenerators/MovementGenerator.cpp
-    MotionGenerators/MovementGenerator.h
-    MotionGenerators/PathFinder.cpp
-    MotionGenerators/PathFinder.h
-    MotionGenerators/PointMovementGenerator.cpp
-    MotionGenerators/PointMovementGenerator.h
-    MotionGenerators/RandomMovementGenerator.cpp
-    MotionGenerators/RandomMovementGenerator.h
-    MotionGenerators/TargetedMovementGenerator.cpp
-    MotionGenerators/TargetedMovementGenerator.h
-    MotionGenerators/WaypointMovementGenerator.cpp
-    MotionGenerators/WaypointMovementGenerator.h
-    movement/MoveSpline.cpp
-    movement/MoveSpline.h
-    movement/MoveSplineFlag.h
-    movement/MoveSplineInit.cpp
-    movement/MoveSplineInit.h
-    movement/MoveSplineInitArgs.h
-    movement/packet_builder.cpp
-    movement/packet_builder.h
-    movement/spline.cpp
-    movement/spline.h
-    movement/spline.impl.h
-    movement/typedefs.h
-    movement/util.cpp
-    Object/AggressorAI.cpp
-    Object/AggressorAI.h
-    Object/AuctionHouseMgr.cpp
-    Object/AuctionHouseMgr.h
-    Object/Bag.cpp
-    Object/Bag.h
-    Object/Camera.cpp
-    Object/Camera.h
-    Object/Corpse.cpp
-    Object/Corpse.h
-    Object/Creature.cpp
-    Object/Creature.h
-    Object/CreatureAI.cpp
-    Object/CreatureAI.h
-    Object/CreatureAIImpl.h
-    Object/CreatureAIRegistry.cpp
-    Object/CreatureAIRegistry.h
-    Object/CreatureAISelector.cpp
-    Object/CreatureAISelector.h
-    Object/CreatureEventAI.cpp
-    Object/CreatureEventAI.h
-    Object/CreatureEventAIMgr.cpp
-    Object/CreatureEventAIMgr.h
-    Object/DynamicObject.cpp
-    Object/DynamicObject.h
-    Object/Formulas.h
-    Object/GameObject.cpp
-    Object/GameObject.h
-    Object/GMTicketMgr.cpp
-    Object/GMTicketMgr.h
-    Object/GuardAI.cpp
-    Object/GuardAI.h
-    Object/Guild.cpp
-    Object/Guild.h
-    Object/Item.cpp
-    Object/Item.h
-    Object/ItemEnchantmentMgr.cpp
-    Object/ItemEnchantmentMgr.h
-    Object/ItemPrototype.h
-    Object/LootMgr.cpp
-    Object/LootMgr.h
-    Object/NullCreatureAI.cpp
-    Object/NullCreatureAI.h
-    Object/Object.cpp
-    Object/Object.h
-    Object/ObjectAccessor.cpp
-    Object/ObjectAccessor.h
-    Object/ObjectGuid.cpp
-    Object/ObjectGuid.h
-    Object/ObjectMgr.cpp
-    Object/ObjectMgr.h
-    Object/ObjectPosSelector.cpp
-    Object/ObjectPosSelector.h
-    Object/Pet.cpp
-    Object/Pet.h
-    Object/PetAI.cpp
-    Object/PetAI.h
-    Object/Player.cpp
-    Object/Player.h
-    Object/PlayerLogger.cpp
-    Object/PlayerLogger.h
-    Object/ReactorAI.cpp
-    Object/ReactorAI.h
-    Object/ReputationMgr.cpp
-    Object/ReputationMgr.h
-    Object/SocialMgr.cpp
-    Object/SocialMgr.h
-    Object/SpellMgr.cpp
-    Object/SpellMgr.h
-    Object/StatSystem.cpp
-    Object/TemporarySummon.cpp
-    Object/TemporarySummon.h
-    Object/Totem.cpp
-    Object/Totem.h
-    Object/TotemAI.cpp
-    Object/TotemAI.h
-    Object/Unit.cpp
-    Object/Unit.h
-    Object/UnitEvents.h
-    Object/UpdateFields.h
-    Object/UpdateMask.h
-    OutdoorPvP/OutdoorPvP.cpp
-    OutdoorPvP/OutdoorPvP.h
-    OutdoorPvP/OutdoorPvPEP.cpp
-    OutdoorPvP/OutdoorPvPEP.h
-    OutdoorPvP/OutdoorPvPMgr.cpp
-    OutdoorPvP/OutdoorPvPMgr.h
-    OutdoorPvP/OutdoorPvPSI.cpp
-    OutdoorPvP/OutdoorPvPSI.h
-    References/FollowerReference.cpp
-    References/FollowerReference.h
-    References/FollowerRefManager.h
-    References/GroupReference.cpp
-    References/GroupReference.h
-    References/GroupRefManager.h
-    References/HostileRefManager.cpp
-    References/HostileRefManager.h
-    References/MapReference.h
-    References/MapRefManager.h
-    References/ThreatManager.cpp
-    References/ThreatManager.h
-    Server/DBCEnums.h
-    Server/DBCfmt.h
-    Server/DBCStores.cpp
-    Server/DBCStores.h
-    Server/DBCStructure.h
-    Server/Opcodes.cpp
-    Server/Opcodes.h
-    Server/SharedDefines.h
-    Server/SQLStorages.cpp
-    Server/SQLStorages.h
-    Server/WorldSession.cpp
-    Server/WorldSession.h
-    Server/WorldSocket.cpp
-    Server/WorldSocket.h
-    Server/WorldSocketMgr.cpp
-    Server/WorldSocketMgr.h
-    Tools/CharacterDatabaseCleaner.cpp
-    Tools/CharacterDatabaseCleaner.h
-    Tools/Language.h
-    Tools/PlayerDump.cpp
-    Tools/PlayerDump.h
-    vmap/BIH.cpp
-    vmap/BIH.h
-    vmap/BIHWrap.h
-    vmap/DynamicTree.cpp
-    vmap/DynamicTree.h
-    vmap/GameObjectModel.cpp
-    vmap/GameObjectModel.h
-    vmap/IVMapManager.h
-    vmap/MapTree.cpp
-    vmap/MapTree.h
-    vmap/ModelInstance.cpp
-    vmap/ModelInstance.h
-    vmap/RegularGrid.h
-    vmap/TileAssembler.cpp
-    vmap/TileAssembler.h
-    vmap/VMapDefinitions.h
-    vmap/VMapFactory.cpp
-    vmap/VMapFactory.h
-    vmap/VMapManager2.cpp
-    vmap/VMapManager2.h
-    vmap/WorldModel.cpp
-    vmap/WorldModel.h
-    Warden/Modules/WardenModuleMac.h
-    Warden/Modules/WardenModuleWin.h
-    Warden/Warden.cpp
-    Warden/Warden.h
-    Warden/WardenCheckMgr.cpp
-    Warden/WardenCheckMgr.h
-    Warden/WardenMac.cpp
-    Warden/WardenMac.h
-    Warden/WardenWin.cpp
-    Warden/WardenWin.h
-    WorldHandlers/AccountMgr.cpp
-    WorldHandlers/AccountMgr.h
-    WorldHandlers/AddonHandler.cpp
-    WorldHandlers/AddonHandler.h
-    WorldHandlers/AuctionHouseHandler.cpp
-    WorldHandlers/Cell.h
-    WorldHandlers/CellImpl.h
-    WorldHandlers/Channel.cpp
-    WorldHandlers/Channel.h
-    WorldHandlers/ChannelHandler.cpp
-    WorldHandlers/ChannelMgr.cpp
-    WorldHandlers/ChannelMgr.h
-    WorldHandlers/CharacterHandler.cpp
-    WorldHandlers/Chat.cpp
-    WorldHandlers/Chat.h
-    WorldHandlers/ChatHandler.cpp
-    WorldHandlers/CombatHandler.cpp
-    WorldHandlers/CreatureLinkingMgr.cpp
-    WorldHandlers/CreatureLinkingMgr.h
-    WorldHandlers/DisableMgr.cpp
-    WorldHandlers/DisableMgr.h
-    WorldHandlers/DuelHandler.cpp
-    WorldHandlers/GameEventMgr.cpp
-    WorldHandlers/GameEventMgr.h
-    WorldHandlers/GMTicketHandler.cpp
-    WorldHandlers/GossipDef.cpp
-    WorldHandlers/GossipDef.h
-    WorldHandlers/GridDefines.h
-    WorldHandlers/GridMap.cpp
-    WorldHandlers/GridMap.h
-    WorldHandlers/GridNotifiers.cpp
-    WorldHandlers/GridNotifiers.h
-    WorldHandlers/GridNotifiersImpl.h
-    WorldHandlers/GridStates.cpp
-    WorldHandlers/GridStates.h
-    WorldHandlers/Group.cpp
-    WorldHandlers/Group.h
-    WorldHandlers/GroupHandler.cpp
-    WorldHandlers/GuildHandler.cpp
-    WorldHandlers/GuildMgr.cpp
-    WorldHandlers/GuildMgr.h
-    WorldHandlers/InstanceData.cpp
-    WorldHandlers/InstanceData.h
-    WorldHandlers/ItemHandler.cpp
-    WorldHandlers/LFGHandler.cpp
-    WorldHandlers/LFGHandler.h
-    WorldHandlers/LFGMgr.cpp
-    WorldHandlers/LFGMgr.h
-    WorldHandlers/LootHandler.cpp
-    WorldHandlers/Mail.cpp
-    WorldHandlers/Mail.h
-    WorldHandlers/MailHandler.cpp
-    WorldHandlers/Map.cpp
-    WorldHandlers/Map.h
-    WorldHandlers/MapManager.cpp
-    WorldHandlers/MapManager.h
-    WorldHandlers/MapPersistentStateMgr.cpp
-    WorldHandlers/MapPersistentStateMgr.h
-    WorldHandlers/MassMailMgr.cpp
-    WorldHandlers/MassMailMgr.h
-    WorldHandlers/MiscHandler.cpp
-    WorldHandlers/MoveMap.cpp
-    WorldHandlers/MoveMap.h
-    WorldHandlers/MoveMapSharedDefines.h
-    WorldHandlers/MovementGeneratorImpl.h
-    WorldHandlers/MovementHandler.cpp
-    WorldHandlers/NPCHandler.cpp
-    WorldHandlers/NPCHandler.h
-    WorldHandlers/ObjectGridLoader.cpp
-    WorldHandlers/ObjectGridLoader.h
-    WorldHandlers/Path.h
-    WorldHandlers/PetHandler.cpp
-    WorldHandlers/PetitionsHandler.cpp
-    WorldHandlers/PoolManager.cpp
-    WorldHandlers/PoolManager.h
-    WorldHandlers/QueryHandler.cpp
-    WorldHandlers/QuestDef.cpp
-    WorldHandlers/QuestDef.h
-    WorldHandlers/QuestHandler.cpp
-    WorldHandlers/ScriptMgr.cpp
-    WorldHandlers/ScriptMgr.h
-    WorldHandlers/SkillHandler.cpp
-    WorldHandlers/Spell.cpp
-    WorldHandlers/Spell.h
-    WorldHandlers/SpellAuraDefines.h
-    WorldHandlers/SpellAuras.cpp
-    WorldHandlers/SpellAuras.h
-    WorldHandlers/SpellEffects.cpp
-    WorldHandlers/SpellHandler.cpp
-    WorldHandlers/TaxiHandler.cpp
-    WorldHandlers/TradeHandler.cpp
-    WorldHandlers/Transports.cpp
-    WorldHandlers/Transports.h
-    WorldHandlers/UnitAuraProcHandler.cpp
-    WorldHandlers/UpdateData.cpp
-    WorldHandlers/UpdateData.h
-    WorldHandlers/WaypointManager.cpp
-    WorldHandlers/WaypointManager.h
-    WorldHandlers/Weather.cpp
-    WorldHandlers/Weather.h
-    WorldHandlers/World.cpp
-    WorldHandlers/World.h
-    pchdef.cpp
-    pchdef.h
+#AH Bot group
+file(GLOB SRC_GRP_AHBOT AuctionHouseBot/*.cpp AuctionHouseBot/*.h)
+source_group("AhBot" FILES ${SRC_GRP_AHBOT})
+
+#Battlegrounds group
+file(GLOB SRC_GRP_BATTLEGROUND BattleGround/*.cpp BattleGround/*.h)
+source_group("BattleGround" FILES ${SRC_GRP_BATTLEGROUND})
+
+#Chat Commands group
+file(GLOB SRC_GRP_CHAT_COMMANDS ChatCommands/*.cpp ChatCommands/*.h)
+source_group("Chat Commands" FILES ${SRC_GRP_CHAT_COMMANDS})
+
+#Map Threading group
+file(GLOB SRC_GRP_MAP_THREAD Maps/*.cpp Maps/*.h)
+source_group("Map Threading" FILES ${SRC_GRP_MAP_THREAD})
+
+#Motion Generator group
+file(GLOB SRC_GRP_MOTION_GEN MotionGenerators/*.cpp MotionGenerators/*.h)
+source_group("Motion generators" FILES ${SRC_GRP_MOTION_GEN})
+
+#Movement group
+file(GLOB SRC_GRP_MOVEMENT movement/*.cpp movement/*.h)
+source_group("Movement" FILES ${SRC_GRP_MOVEMENT})
+
+#Object group
+file(GLOB SRC_GRP_OBJECT Object/*.cpp Object/*.h)
+source_group("Object" FILES ${SRC_GRP_OBJECT})
+
+#Outdoors PvP group
+file(GLOB SRC_GRP_OUTDOOR_PVP OutdoorPvP/*.cpp OutdoorPvP/*.h)
+source_group("Outdoor PvP" FILES ${SRC_GRP_OUTDOOR_PVP})
+
+#References group
+file(GLOB SRC_GRP_REFERENCES References/*.cpp References/*.h)
+source_group("References" FILES ${SRC_GRP_REFERENCES})
+
+#Server group
+file(GLOB SRC_GRP_SERVER Server/*.cpp Server/*.h)
+source_group("Server" FILES ${SRC_GRP_SERVER})
+
+#Tools group
+file(GLOB SRC_GRP_TOOL Tools/*.cpp Tools/*.h)
+source_group("Tool" FILES ${SRC_GRP_TOOL})
+
+#VMap group
+file(GLOB SRC_GRP_VMAPS vmap/*.cpp vmap/*.h)
+source_group("vmaps" FILES ${SRC_GRP_VMAPS})
+
+#Warden group
+file(GLOB SRC_GRP_WARDEN Warden/*.cpp Warden/*.h)
+source_group("Warden" FILES ${SRC_GRP_WARDEN})
+
+#Warden Modules group
+file(GLOB SRC_GRP_WARDEN_MODULES Warden/Modules/*.cpp Warden/Modules/*.h)
+source_group("Warden\\Modules" FILES ${SRC_GRP_WARDEN_MODULES})
+
+#World and Handlers group
+file(GLOB SRC_GRP_WORLD_HANDLERS WorldHandlers/*.cpp WorldHandlers/*.h)
+source_group("World\\Handlers" FILES ${SRC_GRP_WORLD_HANDLERS})
+
+configure_file(AuctionHouseBot/ahbot.conf.dist.in ${CMAKE_CURRENT_BINARY_DIR}/AuctionHouseBot/ahbot.conf.dist)
+
+add_library(game STATIC
+    ${SRC_GRP_AHBOT}
+    ${SRC_GRP_BATTLEGROUND}
+    ${SRC_GRP_CHAT_COMMANDS}
+    ${SRC_GRP_MAP_THREAD}
+    ${SRC_GRP_MOTION_GEN}
+    ${SRC_GRP_MOVEMENT}
+    ${SRC_GRP_OBJECT}
+    ${SRC_GRP_OUTDOOR_PVP}
+    ${SRC_GRP_REFERENCES}
+    ${SRC_GRP_SERVER}
+    ${SRC_GRP_TOOL}
+    ${SRC_GRP_VMAPS}
+    ${SRC_GRP_WARDEN}
+    ${SRC_GRP_WARDEN_MODULES}
+    ${SRC_GRP_WORLD_HANDLERS}
+    $<$<BOOL:${PCH}>:
+        pchdef.cpp
+        pchdef.h
+    >
 )
-
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${LIBRARY_SRCS})
-
-add_library(game STATIC ${LIBRARY_SRCS})
 
 target_include_directories(game
     PUBLIC
-	    ${CMAKE_CURRENT_SOURCE_DIR}
-	    AuctionHouseBot
+        ${CMAKE_CURRENT_SOURCE_DIR}
+        AuctionHouseBot
         BattleGround
         ChatCommands
         Maps
         MotionGenerators
-        movement
         Object
         OutdoorPvP
         References
@@ -361,34 +122,34 @@ target_include_directories(game
 
 target_compile_definitions(game
     PUBLIC
-	    CLASSIC
+        CLASSIC
         $<$<BOOL:${SOAP}>:ENABLE_SOAP>
         $<$<BOOL:${SCRIPT_LIB_SD3}>:ENABLE_SD3>
         $<$<BOOL:${PLAYERBOTS}>:ENABLE_PLAYERBOTS>
         $<$<BOOL:${SCRIPT_LIB_ELUNA}>:ENABLE_ELUNA>
-)		
+)
 
-# Generate precompiled header
-if(PCH)
-    ADD_CXX_PCH(game ${CMAKE_CURRENT_SOURCE_DIR}/pchdef.h ${CMAKE_CURRENT_SOURCE_DIR}/pchdef.cpp)
-endif()
 
 # we don't link eluna and playerbot explicitely here because of circular dependencies
 # we use INTERFACE version for them to get access transitively to header files
-# the real libraries must be linked into mangosd/realmd
+# the real libraries must be linked into mangosd
 
 target_link_libraries(game
     PUBLIC
-	    share
-		detour
-		g3dlite
-        #$<$<BOOL:${SOAP}>:gsoap>
+        shared
+        RecastNavigation::Detour
+        g3dlite
         $<$<BOOL:${SCRIPT_LIB_SD3}>:mangosscript>
         $<$<BOOL:${PLAYERBOTS}>:BotsIntf>
         $<$<BOOL:${SCRIPT_LIB_ELUNA}>:ElunaIntf>
-		$<$<BOOL:${SCRIPT_LIB_ELUNA}>:lualib>
 )
 
-#AH Bot Config
-configure_file("${CMAKE_CURRENT_SOURCE_DIR}/AuctionHouseBot/ahbot.conf.dist.in" "${CMAKE_CURRENT_BINARY_DIR}/AuctionHouseBot/ahbot.conf.dist")
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/AuctionHouseBot/ahbot.conf.dist" DESTINATION "${CONF_INSTALL_DIR}")
+# Generate precompiled header
+if(PCH)
+    ADD_CXX_PCH(game pchdef.h pchdef.cpp)
+endif()
+
+install(
+    FILES ${CMAKE_CURRENT_BINARY_DIR}/AuctionHouseBot/ahbot.conf.dist
+    DESTINATION ${CONF_INSTALL_DIR}
+)

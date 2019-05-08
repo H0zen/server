@@ -25,7 +25,7 @@
 #ifndef MANGOS_H_MANGOS_REPUTATION_MGR
 #define MANGOS_H_MANGOS_REPUTATION_MGR
 
-#include "Common/Common.h"
+#include "Common.h"
 #include "SharedDefines.h"
 #include "DBCStructure.h"
 #include <map>

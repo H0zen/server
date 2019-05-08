@@ -28,7 +28,7 @@
 #include "ObjectGuid.h"
 #include "Player.h"
 #include "Policies/Singleton.h"
-#include "Utilities/Util.h"
+#include "Util.h"
 #include "Auth/Sha1.h"
 
 extern DatabaseType LoginDatabase;
@@ -242,16 +242,14 @@ bool AccountMgr::normalizeString(std::string& utf8str)
 std::string AccountMgr::CalculateShaPassHash(std::string& name, std::string& password)
 {
     Sha1Hash sha;
-	uint8 out[SHA_DIGEST_LENGTH];
-
     sha.Initialize();
     sha.UpdateData(name);
     sha.UpdateData(":");
     sha.UpdateData(password);
-    sha.FinalizeTo(out);
+    sha.Finalize();
 
     std::string encoded;
-    hexEncodeByteArray(out, SHA_DIGEST_LENGTH, encoded);
+    hexEncodeByteArray(sha.GetDigest(), sha.GetLength(), encoded);
 
     return encoded;
 }

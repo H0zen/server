@@ -22,9 +22,9 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-#include <algorithm>
-#include <openssl/bn.h>
 #include "Auth/BigNumber.h"
+#include <openssl/bn.h>
+#include <algorithm>
 
 BigNumber::BigNumber()
 {

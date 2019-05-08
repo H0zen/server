@@ -26,7 +26,7 @@
 #include "ObjectAccessor.h"
 #include "Database/DatabaseEnv.h"
 #include "World.h"
-#include "Log/Log.h"
+#include "Log.h"
 
 PlayerLogger::PlayerLogger(ObjectGuid const & guid) : logActiveMask(0), playerGuid(guid.GetCounter())
 {

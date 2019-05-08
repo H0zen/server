@@ -25,8 +25,8 @@
 #ifndef MANGOSSERVER_WORLDPACKET_H
 #define MANGOSSERVER_WORLDPACKET_H
 
-#include "Common/Common.h"
-#include "Utilities/ByteBuffer.h"
+#include "Common.h"
+#include "ByteBuffer.h"
 #include "Opcodes.h"
 
 // Note: m_opcode and size stored in platfom dependent format

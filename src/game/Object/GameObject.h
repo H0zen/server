@@ -25,7 +25,7 @@
 #ifndef MANGOSSERVER_GAMEOBJECT_H
 #define MANGOSSERVER_GAMEOBJECT_H
 
-#include "Common/Common.h"
+#include "Common.h"
 #include "SharedDefines.h"
 #include "Object.h"
 #include "LootMgr.h"

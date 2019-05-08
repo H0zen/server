@@ -25,7 +25,7 @@
 #ifndef MANGOS_CELLIMPL_H
 #define MANGOS_CELLIMPL_H
 
-#include "Common/Common.h"
+#include "Common.h"
 #include "Cell.h"
 #include "Map.h"
 #include <cmath>

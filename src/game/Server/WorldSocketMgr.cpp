@@ -27,8 +27,8 @@
 *  \author Derex <derex101@gmail.com>
 */
 
-#include "Common/Common.h"
-#include "Log/Log.h"
+#include "Common.h"
+#include "Log.h"
 #include "Config/Config.h"
 #include "WorldSocket.h"
 #include "WorldSocketMgr.h"
@@ -44,7 +44,7 @@
 
 WorldSocketMgr::WorldSocketMgr()
   : m_SockOutKBuff(-1), m_SockOutUBuff(65536), m_UseNoDelay(true),
-    acceptor_(NULL),reactor_(NULL)
+    reactor_(NULL), acceptor_(NULL)
 {
 }
 

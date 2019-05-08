@@ -40,13 +40,12 @@ set(CMAKE_CONFIGURATION_TYPES Debug Release)
 
 #==================================================================================
 # Define available cmake options below
-option(POSTGRESQL           "Use PostgreSQL instead of MariaDB/MySQL"       OFF)
 option(BUILD_MANGOSD        "Build the main server"                         ON)
 option(BUILD_REALMD         "Build the login server"                        ON)
 option(BUILD_TOOLS          "Build the map/vmap/mmap extractors"            ON)
 option(USE_STORMLIB         "Use StormLib for reading MPQs"                 OFF)
-option(SCRIPT_LIB_ELUNA     "Compile with support for Eluna scripts"        ON)
-option(SCRIPT_LIB_SD3       "Compile with support for ScriptDev3 scripts"   ON)
+option(SCRIPT_LIB_ELUNA     "Compile with support for Eluna scripts"        OFF)
+option(SCRIPT_LIB_SD3       "Compile with support for ScriptDev3 scripts"   OFF)
 option(PLAYERBOTS           "Enable Player Bots"                            OFF)
 option(SOAP                 "Enable remote access via SOAP"                 OFF)
 option(PCH                  "Enable precompiled headers"                    OFF)
@@ -58,7 +57,6 @@ message(
   Options that can be used in order to configure the process:
    General:
     CMAKE_INSTALL_PREFIX    Path where the server should be installed to
-    POSTGRESQL              Use PostgreSQL instead of MariaDB/MySQL
     BUILD_MANGOSD           Build the main server
     BUILD_REALMD            Build the login server
     BUILD_TOOLS             Build the map/vmap/mmap extractors
@@ -88,23 +86,17 @@ else()
 endif()
 
 if(UNIX)
-    set(BIN_DIR          ${CMAKE_INSTALL_PREFIX}/bin/)
-    set(CONF_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/etc/)
+    set(BIN_DIR          ${CMAKE_INSTALL_PREFIX}/bin)
+    set(CONF_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/etc)
 else()
-    set(BIN_DIR          ${CMAKE_INSTALL_PREFIX}/)
-    set(CONF_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/)
+    set(BIN_DIR          ${CMAKE_INSTALL_PREFIX})
+    set(CONF_INSTALL_DIR ${CMAKE_INSTALL_PREFIX})
 endif()
 
-
-#find_package(Git)
 
 find_package(Threads REQUIRED)
-
-if(POSTGRESQL)
-    find_package(PostgreSQL REQUIRED)
-else()
-    find_package(MySQL REQUIRED)
-endif()
+find_package(MySQL   REQUIRED)
+find_package(OpenSSL REQUIRED)
 
 find_package(ZLIB  QUIET)
 find_package(BZip2 QUIET)

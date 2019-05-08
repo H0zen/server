@@ -23,13 +23,13 @@
  */
 
 #include <zlib.h>
-#include "Common/Common.h"
+#include "Common.h"
 #include "Language.h"
 #include "Database/DatabaseEnv.h"
 #include "Database/DatabaseImpl.h"
-#include "Utilities/WorldPacket.h"
+#include "WorldPacket.h"
 #include "Opcodes.h"
-#include "Log/Log.h"
+#include "Log.h"
 #include "Player.h"
 #include "World.h"
 #include "GuildMgr.h"

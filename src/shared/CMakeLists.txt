@@ -17,6 +17,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
+include(TestBigEndian)
 
 set(SRC_GRP_AUTH
   Auth/ARC4.cpp
@@ -27,26 +28,33 @@ set(SRC_GRP_AUTH
   Auth/BigNumber.h
   Auth/HMACSHA1.cpp
   Auth/HMACSHA1.h
-  Auth/md5.cpp
-  Auth/md5.h
   Auth/Sha1.cpp
   Auth/Sha1.h
   Auth/WardenKeyGeneration.h
+  Auth/md5.c
+  Auth/md5.h
 )
-
+source_group("Auth" FILES ${SRC_GRP_AUTH})
 
 set(SRC_GRP_COMMON
   Common/Common.cpp
   Common/Common.h
   Common/ServerDefines.h
 )
-
+source_group("Common" FILES ${SRC_GRP_COMMON})
 
 set(SRC_GRP_CONFIG
   Config/Config.cpp
   Config/Config.h
 )
+source_group("Config" FILES ${SRC_GRP_CONFIG})
 
+set(SRC_GRP_DATASTORE
+  DataStores/DBCFileLoader.cpp
+  DataStores/DBCFileLoader.h
+  DataStores/DBCStore.h
+)
+source_group("DataStores" FILES ${SRC_GRP_DATASTORE})
 
 set(SRC_GRP_DATABASE
   Database/Database.cpp
@@ -65,80 +73,45 @@ set(SRC_GRP_DATABASE
   Database/QueryResultMysql.h
   Database/QueryResultPostgre.cpp
   Database/QueryResultPostgre.h
+  Database/SQLStorage.cpp
+  Database/SQLStorage.h
+  Database/SQLStorageImpl.h
   Database/SqlDelayThread.cpp
   Database/SqlDelayThread.h
   Database/SqlOperations.cpp
   Database/SqlOperations.h
   Database/SqlPreparedStatement.cpp
   Database/SqlPreparedStatement.h
-  Database/SQLStorage.cpp
-  Database/SQLStorage.h
-  Database/SQLStorageImpl.h
 )
-
-
-set(SRC_GRP_DATASTORE
-  DataStores/DBCFileLoader.cpp
-  DataStores/DBCFileLoader.h
-  DataStores/DBCStore.h
-)
-
+source_group("Database" FILES ${SRC_GRP_DATABASE})
 
 set(SRC_GRP_DYNAMIC
   Dynamic/FactoryHolder.h
   Dynamic/ObjectRegistry.h
 )
+source_group("Dynamic" FILES ${SRC_GRP_DYNAMIC})
 
-
-set(SRC_GRP_GSYS
+set(SRC_GRP_GAMESYSTEM
   GameSystem/Grid.h
   GameSystem/GridLoader.h
-  GameSystem/GridReference.h
   GameSystem/GridRefManager.h
+  GameSystem/GridReference.h
   GameSystem/NGrid.h
   GameSystem/TypeContainer.h
   GameSystem/TypeContainerVisitor.h
 )
-
-
-if(NOT WIN32)
-  set(SRC_GRP_SERVICE
-    Linux/PosixDaemon.cpp
-    Linux/PosixDaemon.h
-)
-else()
-  set(SRC_GRP_SERVICE
-    Win/ServiceWin32.cpp
-    Win/ServiceWin32.h
-)
-endif()
-
+source_group("GameSystem" FILES ${SRC_GRP_GAMESYSTEM})
 
 set(SRC_GRP_LOCKQ
   LockedQueue/LockedQueue.h
 )
-
+source_group("LockedQueue" FILES ${SRC_GRP_LOCKQ})
 
 set(SRC_GRP_LOG
   Log/Log.cpp
   Log/Log.h
 )
-
-
-set(SRC_GRP_PLATFORM
-  Platform/CompilerDefs.h
-  Platform/Define.h
-)
-
-
-set(SRC_GRP_POL
-  Policies/CreationPolicy.h
-  Policies/ObjectLifeTime.cpp
-  Policies/ObjectLifeTime.h
-  Policies/Singleton.h
-  Policies/ThreadingModel.h
-)
-
+source_group("Log" FILES ${SRC_GRP_LOG})
 
 set(SRC_GRP_THREAD
   Threading/DelayExecutor.cpp
@@ -146,84 +119,119 @@ set(SRC_GRP_THREAD
   Threading/Threading.cpp
   Threading/Threading.h
 )
+source_group("Threading" FILES ${SRC_GRP_THREAD})
 
+set(SRC_GRP_PLATFORM
+  Platform/CompilerDefs.h
+  Platform/Define.h
+)
+source_group("Platform" FILES ${SRC_GRP_PLATFORM})
 
-set(SRC_GRP_UTIL
+set(SRC_GRP_POLICIES
+  Policies/CreationPolicy.h
+  Policies/ObjectLifeTime.cpp
+  Policies/ObjectLifeTime.h
+  Policies/Singleton.h
+  Policies/ThreadingModel.h
+)
+source_group("Policies" FILES ${SRC_GRP_POLICIES})
+
+if(WIN32)
+    set(SRC_GRP_SVC
+      Win/ServiceWin32.cpp
+      Win/ServiceWin32.h
+    )
+else()
+    set(SRC_GRP_SVC
+      Linux/PosixDaemon.cpp
+      Linux/PosixDaemon.h
+    )
+endif()
+source_group("Services" FILES ${SRC_GRP_SVC})
+
+set(SRC_GRP_UTILITIES
   Utilities/ByteBuffer.cpp
   Utilities/ByteBuffer.h
-  Utilities/ByteConverter.h
-  Utilities/Callback.h
   Utilities/Errors.h
-  Utilities/EventProcessor.cpp
-  Utilities/EventProcessor.h
-  Utilities/LinkedList.h
-  Utilities/LinkedReference/Reference.h
-  Utilities/LinkedReference/RefManager.h
   Utilities/ProgressBar.cpp
   Utilities/ProgressBar.h
   Utilities/RNGen.h
   Utilities/Timer.h
-  Utilities/TypeList.h
-  Utilities/UnorderedMapSet.h
   Utilities/Util.cpp
   Utilities/Util.h
   Utilities/WorldPacket.h
+  Utilities/ByteConverter.h
+  Utilities/Callback.h
+  Utilities/EventProcessor.cpp
+  Utilities/EventProcessor.h
+  Utilities/LinkedList.h
+  Utilities/LinkedReference/RefManager.h
+  Utilities/LinkedReference/Reference.h
+  Utilities/TypeList.h
+  Utilities/UnorderedMapSet.h
+)
+source_group("Utilities" FILES ${SRC_GRP_UTILITIES})
+
+set(TGT_INCL
+  Auth
+  Common
+  Config
+  DataStores
+  Database
+  Linux
+  LockedQueue
+  Log
+  Threading
+  Utilities
+  Utilities/LinkedReference
+  Win
+  Dynamic
+  GameSystem
+  Platform
+  Policies
 )
 
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/SystemConfig.h.in" "${CMAKE_CURRENT_BINARY_DIR}/SystemConfig.h")
 
-set(LIB_SRC
+TEST_BIG_ENDIAN(ENDIAN_VALUE)
+
+add_library(shared STATIC
     ${SRC_GRP_AUTH}
-	${SRC_GRP_COMMON}
-	${SRC_GRP_CONFIG}
-	${SRC_GRP_DATABASE}
-	${SRC_GRP_DATASTORE}
-	${SRC_GRP_DATABASE}
-	${SRC_GRP_DYNAMIC}
-	${SRC_GRP_GSYS}
-	${SRC_GRP_LOCKQ}
-	${SRC_GRP_LOG}
-	${SRC_GRP_PLATFORM}
-	${SRC_GRP_POL}
-	${SRC_GRP_SERVICE}
-	${SRC_GRP_THREAD}
-	${SRC_GRP_UTIL}
-)
-
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${LIB_SRC})
-
-add_library(share STATIC
-    ${LIB_SRC}
-	${CMAKE_CURRENT_BINARY_DIR}/SystemConfig.h
+    ${SRC_GRP_COMMON}
+    ${SRC_GRP_CONFIG}
+    ${SRC_GRP_DATASTORE}
+    ${SRC_GRP_DATABASE}
+    ${SRC_GRP_DYNAMIC}
+    ${SRC_GRP_GAMESYSTEM}
+    ${SRC_GRP_LOCKQ}
+    ${SRC_GRP_LOG}
+    ${SRC_GRP_THREAD}
+    ${SRC_GRP_PLATFORM}
+    ${SRC_GRP_POLICIES}
+    ${SRC_GRP_SVC}
+    ${SRC_GRP_UTILITIES}
     revision.h
+    ${CMAKE_CURRENT_BINARY_DIR/SystemConfig.h}
 )
 
-target_include_directories(share
+target_include_directories(shared
     PUBLIC
-      ${CMAKE_CURRENT_SOURCE_DIR}
-      ${CMAKE_CURRENT_BINARY_DIR}
-	  Common
-	  Utilities
-	  Log
-	  Auth
+        ${CMAKE_CURRENT_SOURCE_DIR}
+        ${CMAKE_CURRENT_BINARY_DIR}
+        ${TGT_INCL}
 )
 
-target_link_libraries(share
+target_compile_definitions(shared
     PUBLIC
-	    ace
-		TomLib::Crypt
-		TomLib::Auth
-		utf8
+        $<$<CONFIG:Debug>:MANGOS_DEBUG>
+        MANGOS_ENDIAN=${ENDIAN_VALUE}
+        $<$<BOOL:${ENDIAN_VALUE}>:ARCH_IS_BIG_ENDIAN>
 )
 
-if(POSTGRESQL)
-target_link_libraries(share
+target_link_libraries(shared
     PUBLIC
-        PostgreSQL::PostgreSQL
-)
-else()
-target_link_libraries(share
-    PUBLIC
+        ace
+        utf8
         MySQL::MySQL
+        OpenSSL::Crypto
 )
-endif()

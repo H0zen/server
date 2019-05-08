@@ -35,7 +35,7 @@
 #include "ObjectGuid.h"
 #include "ObjectMgr.h"
 #include "Mail.h"
-#include "Utilities/WorldPacket.h"
+#include "WorldPacket.h"
 #include "Formulas.h"
 #include "GridNotifiersImpl.h"
 #include "Chat.h"
@@ -715,7 +715,7 @@ void BattleGround::EndBattleGround(Team winner)
     this->RemoveFromBGFreeSlotQueue();
 
     //uint32 loser_rating = 0;
-    //uint32 winner_rating = 0;
+    uint32 winner_rating = 0;
     WorldPacket data;
     int32 winmsg_id = 0;
 

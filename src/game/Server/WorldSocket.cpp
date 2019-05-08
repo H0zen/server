@@ -34,13 +34,13 @@
 #include <ace/Auto_Ptr.h>
 
 #include "WorldSocket.h"
-#include "Common/Common.h"
+#include "Common.h"
 
-#include "Utilities/Util.h"
+#include "Util.h"
 #include "World.h"
-#include "Utilities/WorldPacket.h"
+#include "WorldPacket.h"
 #include "SharedDefines.h"
-#include "Utilities/ByteBuffer.h"
+#include "ByteBuffer.h"
 #include "AddonHandler.h"
 #include "Opcodes.h"
 #include "Database/DatabaseEnv.h"
@@ -48,7 +48,7 @@
 #include "Auth/Sha1.h"
 #include "WorldSession.h"
 #include "WorldSocketMgr.h"
-#include "Log/Log.h"
+#include "Log.h"
 #include "DBCStores.h"
 #ifdef ENABLE_ELUNA
 #include "LuaEngine.h"
@@ -220,7 +220,7 @@ int WorldSocket::open(void* a)
     return SendPacket(packet);
 }
 
-int WorldSocket::close(int)
+int WorldSocket::close(u_long)
 {
     shutdown();
 
@@ -580,7 +580,7 @@ int WorldSocket::HandleAuthSession(WorldPacket& recvPacket)
     uint32 BuiltNumberClient;
     LocaleConstant locale;
     std::string account;
-
+    Sha1Hash sha1;
     BigNumber v, s, g, N, K;
     std::string os;
     WorldPacket packet, SendAddonPacked;
@@ -652,13 +652,15 @@ int WorldSocket::HandleAuthSession(WorldPacket& recvPacket)
     v.SetHexStr(fields[5].GetString());
     s.SetHexStr(fields[6].GetString());
 
-    std::string sStr = s.AsHexStr();                        // Must be freed by OPENSSL_free()
-    std::string vStr = v.AsHexStr();                        // Must be freed by OPENSSL_free()
+    const char* sStr = s.AsHexStr();                        // Must be freed by OPENSSL_free()
+    const char* vStr = v.AsHexStr();                        // Must be freed by OPENSSL_free()
 
     DEBUG_LOG("WorldSocket::HandleAuthSession: (s,v) check s: %s v: %s",
-              sStr.c_str(),
-              vStr.c_str());
+              sStr,
+              vStr);
 
+    OPENSSL_free((void*) sStr);
+    OPENSSL_free((void*) vStr);
 
     ///- Re-check ip locking (same check as in realmd).
     if (fields[4].GetUInt8() == 1)  // if ip is locked
@@ -741,7 +743,6 @@ int WorldSocket::HandleAuthSession(WorldPacket& recvPacket)
 
     // Check that Key and account name are the same on client and server
     Sha1Hash sha;
-	uint8 _digest[SHA_DIGEST_LENGTH];
 
     uint32 t = 0;
     uint32 seed = m_Seed;
@@ -751,9 +752,9 @@ int WorldSocket::HandleAuthSession(WorldPacket& recvPacket)
     sha.UpdateData((uint8*) & clientSeed, 4);
     sha.UpdateData((uint8*) & seed, 4);
     sha.UpdateBigNumbers(&K, NULL);
-    sha.FinalizeTo(_digest);
+    sha.Finalize();
 
-    if (memcmp(_digest, digest, SHA_DIGEST_LENGTH))
+    if (memcmp(sha.GetDigest(), digest, 20))
     {
         packet.Initialize(SMSG_AUTH_RESPONSE, 1);
         packet << uint8(AUTH_FAILED);
@@ -780,7 +781,7 @@ int WorldSocket::HandleAuthSession(WorldPacket& recvPacket)
     // NOTE ATM the socket is single-threaded, have this in mind ...
     ACE_NEW_RETURN(m_Session, WorldSession(id, this, AccountTypes(security), mutetime, locale), -1);
 
-    m_Crypt.SetKey(K.AsByteArray().data(), 40);
+    m_Crypt.SetKey(K.AsByteArray(), 40);
     m_Crypt.Init();
 
     m_Session->LoadTutorialsData();

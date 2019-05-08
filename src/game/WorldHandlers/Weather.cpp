@@ -31,10 +31,10 @@
 #include "Player.h"
 #include "Map.h"
 #include "World.h"
-#include "Utilities/WorldPacket.h"
-#include "Log/Log.h"
-#include "Utilities/Util.h"
-#include "Utilities/ProgressBar.h"
+#include "WorldPacket.h"
+#include "Log.h"
+#include "Util.h"
+#include "ProgressBar.h"
 #ifdef ENABLE_ELUNA
 #include "LuaEngine.h"
 #endif /* ENABLE_ELUNA */

@@ -23,7 +23,7 @@
  */
 
 #include "Database/DatabaseEnv.h"
-#include "Utilities/WorldPacket.h"
+#include "WorldPacket.h"
 #include "WorldSession.h"
 #include "Player.h"
 #include "Opcodes.h"
@@ -32,7 +32,7 @@
 #include "GuildMgr.h"
 #include "Chat.h"
 #include "SocialMgr.h"
-#include "Utilities/Util.h"
+#include "Util.h"
 #include "Language.h"
 #include "World.h"
 #ifdef ENABLE_ELUNA

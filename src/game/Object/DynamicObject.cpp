@@ -22,7 +22,7 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-#include "Common/Common.h"
+#include "Common.h"
 #include "World.h"
 #include "ObjectAccessor.h"
 #include "GridNotifiers.h"

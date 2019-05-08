@@ -31,10 +31,10 @@
 #include "Config/Config.h"
 #include "Platform/Define.h"
 #include "SystemConfig.h"
-#include "Log/Log.h"
+#include "Log.h"
 #include "Opcodes.h"
 #include "WorldSession.h"
-#include "Utilities/WorldPacket.h"
+#include "WorldPacket.h"
 #include "Player.h"
 #include "AccountMgr.h"
 #include "AuctionHouseMgr.h"
@@ -50,7 +50,7 @@
 #include "MapManager.h"
 #include "ScriptMgr.h"
 #include "CreatureAIRegistry.h"
-#include "Utilities/ProgressBar.h"
+#include "ProgressBar.h"
 #include "Policies/Singleton.h"
 #include "BattleGround/BattleGroundMgr.h"
 #include "OutdoorPvP/OutdoorPvP.h"
@@ -64,7 +64,7 @@
 #include "MapPersistentStateMgr.h"
 #include "WaypointManager.h"
 #include "GMTicketMgr.h"
-#include "Utilities/Util.h"
+#include "Util.h"
 #include "AuctionHouseBot/AuctionHouseBot.h"
 #include "CharacterDatabaseCleaner.h"
 #include "CreatureLinkingMgr.h"
@@ -79,7 +79,7 @@
 #endif /* ENABLE_ELUNA */
 
 #ifdef ENABLE_PLAYERBOTS
-
+#include "AhBot.h"
 #include "PlayerbotAIConfig.h"
 #include "RandomPlayerbotMgr.h"
 #endif

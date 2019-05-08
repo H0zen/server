@@ -24,8 +24,8 @@
 
 #include "ScriptMgr.h"
 #include "Policies/Singleton.h"
-#include "Log/Log.h"
-#include "Utilities/ProgressBar.h"
+#include "Log.h"
+#include "ProgressBar.h"
 #include "ObjectMgr.h"
 #include "WaypointManager.h"
 #include "GridNotifiers.h"

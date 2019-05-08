@@ -23,11 +23,11 @@
  */
 
 #include "LootMgr.h"
-#include "Log/Log.h"
+#include "Log.h"
 #include "ObjectMgr.h"
-#include "Utilities/ProgressBar.h"
+#include "ProgressBar.h"
 #include "World.h"
-#include "Utilities/Util.h"
+#include "Util.h"
 #include "SharedDefines.h"
 #include "DBCStores.h"
 #include "SQLStorages.h"

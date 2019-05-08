@@ -22,17 +22,17 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-#include "Utilities/WorldPacket.h"
+#include "WorldPacket.h"
 #include "WorldSession.h"
 #include "Opcodes.h"
-#include "Log/Log.h"
+#include "Log.h"
 #include "World.h"
 #include "ObjectMgr.h"
 #include "ObjectGuid.h"
 #include "Player.h"
 #include "AuctionHouseMgr.h"
 #include "Mail.h"
-#include "Utilities/Util.h"
+#include "Util.h"
 #include "Chat.h"
 #ifdef ENABLE_ELUNA
 #include "LuaEngine.h"

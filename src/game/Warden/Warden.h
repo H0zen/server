@@ -29,7 +29,7 @@
 #include <map>
 #include "ARC4.h"
 #include "BigNumber.h"
-#include "Utilities/ByteBuffer.h"
+#include "ByteBuffer.h"
 #include "WardenCheckMgr.h"
 #include "Database/DatabaseEnv.h"
 

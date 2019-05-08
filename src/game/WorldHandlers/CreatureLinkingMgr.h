@@ -41,7 +41,7 @@
 #ifndef CREATURE_LINKING_MGR_H
 #define CREATURE_LINKING_MGR_H
 
-#include "Common/Common.h"
+#include "Common.h"
 #include "Policies/Singleton.h"
 #include "ObjectGuid.h"
 #include <functional>

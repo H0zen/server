@@ -22,7 +22,7 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-#include "Common/Common.h"
+#include "Common.h"
 #include "PlayerDump.h"
 #include "Database/DatabaseEnv.h"
 #include "SQLStorages.h"

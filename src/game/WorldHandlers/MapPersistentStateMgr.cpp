@@ -25,18 +25,18 @@
 #include "MapPersistentStateMgr.h"
 #include "SQLStorages.h"
 #include "Player.h"
-#include "Log/Log.h"
+#include "Log.h"
 #include "CellImpl.h"
 #include "Map.h"
 #include "MapManager.h"
-#include "Utilities/Timer.h"
+#include "Timer.h"
 #include "GridNotifiersImpl.h"
 #include "ObjectMgr.h"
 #include "GameEventMgr.h"
 #include "World.h"
 #include "Group.h"
 #include "InstanceData.h"
-#include "Utilities/ProgressBar.h"
+#include "ProgressBar.h"
 #include <vector>
 
 INSTANTIATE_SINGLETON_1(MapPersistentStateManager);
