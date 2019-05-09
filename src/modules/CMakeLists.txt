@@ -76,18 +76,20 @@ set(ELUNA_FILES
     Eluna/WorldPacketMethods.h
 )
 
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ELUNA_FILES})
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${ELUNA_FILES})
 
 add_library(ElunaIntf INTERFACE)
-target_include_directories(ElunaIntf INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/Eluna)
+target_include_directories(ElunaIntf
+    INTERFACE 
+        ${CMAKE_CURRENT_SOURCE_DIR}/Eluna
+)
 
 add_library(Eluna STATIC ${ELUNA_FILES})
 
 target_link_libraries(Eluna
     PUBLIC
-		game
+        game
 )
-
 endif()
 
 # Include Player Bots if enabled

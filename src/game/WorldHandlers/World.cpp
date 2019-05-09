@@ -1352,7 +1352,7 @@ void World::SetInitialWorldSettings()
 
     sLog.outString("Initializing Scripts...");
 #ifdef ENABLE_SD3
-    switch (sScriptMgr.LoadScriptLibrary(MANGOS_SCRIPT_NAME))
+    switch (sScriptMgr.LoadScriptLibrary("mangosscript"))
     {
         case SCRIPT_LOAD_OK:
             sLog.outString("Scripting library loaded.");

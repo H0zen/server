@@ -107,3 +107,4 @@ if(NOT MySQL_FOUND)
   endif ()
 endif ()
 unset(_MYSQL_USE_PKGCONFIG)
+

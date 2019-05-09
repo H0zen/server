@@ -52,7 +52,7 @@ add_executable(mangosd
     $<$<BOOL:${SOAP}>:${SRC_GRP_SOAP}>
     $<$<BOOL:${WIN32}>:
         ${CMAKE_CURRENT_BINARY_DIR}/VersionInfo.h
-        VersionResource.rc
+        mangosd.rc
     >
 )
 
@@ -67,8 +67,6 @@ target_link_libraries(mangosd
     PUBLIC
         game
         $<$<BOOL:${SOAP}>:gsoap>
-        $<$<BOOL:${SCRIPT_LIB_ELUNA}>:Eluna>
-        $<$<BOOL:${PLAYERBOTS}>:Bots>
         Threads::Threads
 )
 

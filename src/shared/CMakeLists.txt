@@ -63,16 +63,11 @@ set(SRC_GRP_DATABASE
   Database/DatabaseImpl.h
   Database/DatabaseMysql.cpp
   Database/DatabaseMysql.h
-  Database/DatabasePostgre.cpp
-  Database/DatabasePostgre.h
   Database/Field.cpp
   Database/Field.h
-  Database/PGSQLDelayThread.h
   Database/QueryResult.h
   Database/QueryResultMysql.cpp
   Database/QueryResultMysql.h
-  Database/QueryResultPostgre.cpp
-  Database/QueryResultPostgre.h
   Database/SQLStorage.cpp
   Database/SQLStorage.h
   Database/SQLStorageImpl.h
@@ -223,6 +218,7 @@ target_include_directories(shared
 
 target_compile_definitions(shared
     PUBLIC
+        ${MANGOS_EXP}
         $<$<CONFIG:Debug>:MANGOS_DEBUG>
         MANGOS_ENDIAN=${ENDIAN_VALUE}
         $<$<BOOL:${ENDIAN_VALUE}>:ARCH_IS_BIG_ENDIAN>

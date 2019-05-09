@@ -113,6 +113,10 @@ if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU" OR "${CMAKE_CXX_COMPILER_ID}" MATCH
         -Wswitch-default
         -Wuninitialized
         -Wmissing-field-initializers
+        $<$<CONFIG:Debug>:
+            -glldb
+            -gline-tables-only
+        >
 
         $<$<CONFIG:Release>:
             -Wno-unused-parameter

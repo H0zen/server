@@ -122,7 +122,6 @@ target_include_directories(game
 
 target_compile_definitions(game
     PUBLIC
-        CLASSIC
         $<$<BOOL:${SOAP}>:ENABLE_SOAP>
         $<$<BOOL:${SCRIPT_LIB_SD3}>:ENABLE_SD3>
         $<$<BOOL:${PLAYERBOTS}>:ENABLE_PLAYERBOTS>
@@ -140,8 +139,15 @@ target_link_libraries(game
         RecastNavigation::Detour
         g3dlite
         $<$<BOOL:${SCRIPT_LIB_SD3}>:mangosscript>
-        $<$<BOOL:${PLAYERBOTS}>:BotsIntf>
-        $<$<BOOL:${SCRIPT_LIB_ELUNA}>:ElunaIntf>
+        $<$<BOOL:${PLAYERBOTS}>:
+            BotsIntf
+            Bots
+        >
+        $<$<BOOL:${SCRIPT_LIB_ELUNA}>:
+            ElunaIntf
+            Eluna
+            lualib
+        >
 )
 
 # Generate precompiled header
