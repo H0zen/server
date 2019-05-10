@@ -77,7 +77,48 @@ source_group("Warden\\Modules" FILES ${SRC_GRP_WARDEN_MODULES})
 file(GLOB SRC_GRP_WORLD_HANDLERS WorldHandlers/*.cpp WorldHandlers/*.h)
 source_group("World\\Handlers" FILES ${SRC_GRP_WORLD_HANDLERS})
 
+# Build the Eluna library if enabled
+if(SCRIPT_LIB_ELUNA)
+    file(GLOB SRC_GRP_ELUNA ${CMAKE_SOURCE_DIR}/src/modules/Eluna/*.cpp ${CMAKE_SOURCE_DIR}/src/modules/Eluna/*.h)
+    source_group("Eluna" FILES ${SRC_GRP_ELUNA})
+endif()
+
 configure_file(AuctionHouseBot/ahbot.conf.dist.in ${CMAKE_CURRENT_BINARY_DIR}/AuctionHouseBot/ahbot.conf.dist)
+
+if(BUILD_TOOLS)
+add_library(vmap2 STATIC
+    vmap/BIH.cpp
+    vmap/VMapManager2.cpp
+    vmap/MapTree.cpp
+    vmap/TileAssembler.cpp
+    vmap/WorldModel.cpp
+    vmap/ModelInstance.cpp
+    vmap/BIH.h
+    vmap/VMapManager2.h
+    vmap/MapTree.h
+    vmap/TileAssembler.h
+    vmap/WorldModel.h
+    vmap/ModelInstance.h
+)
+
+target_include_directories(vmap2
+    PUBLIC
+        vmap
+        WorldHandlers
+)
+
+target_compile_definitions(vmap2
+    PUBLIC
+        MMAP_GENERATOR
+        NO_CORE_FUNCS
+)
+target_link_libraries(vmap2
+    PUBLIC
+        shared
+        g3dlite
+        RecastNavigation::Detour
+)
+endif()
 
 add_library(game STATIC
     ${SRC_GRP_AHBOT}
@@ -95,10 +136,7 @@ add_library(game STATIC
     ${SRC_GRP_WARDEN}
     ${SRC_GRP_WARDEN_MODULES}
     ${SRC_GRP_WORLD_HANDLERS}
-    $<$<BOOL:${PCH}>:
-        pchdef.cpp
-        pchdef.h
-    >
+	$<$<BOOL:${SCRIPT_LIB_ELUNA}>:${SRC_GRP_ELUNA}>	
 )
 
 target_include_directories(game
@@ -118,6 +156,7 @@ target_include_directories(game
         Warden
         Warden/Modules
         WorldHandlers
+		$<$<BOOL:${SCRIPT_LIB_ELUNA}>:${CMAKE_SOURCE_DIR}/src/modules/Eluna>
 )
 
 target_compile_definitions(game
@@ -137,17 +176,11 @@ target_link_libraries(game
     PUBLIC
         shared
         RecastNavigation::Detour
+		ZLIB::ZLIB
         g3dlite
         $<$<BOOL:${SCRIPT_LIB_SD3}>:mangosscript>
-        $<$<BOOL:${PLAYERBOTS}>:
-            BotsIntf
-            Bots
-        >
-        $<$<BOOL:${SCRIPT_LIB_ELUNA}>:
-            ElunaIntf
-            Eluna
-            lualib
-        >
+        $<$<BOOL:${PLAYERBOTS}>:Bots>
+        $<$<BOOL:${SCRIPT_LIB_ELUNA}>:lualib>
 )
 
 # Generate precompiled header
@@ -159,3 +192,11 @@ install(
     FILES ${CMAKE_CURRENT_BINARY_DIR}/AuctionHouseBot/ahbot.conf.dist
     DESTINATION ${CONF_INSTALL_DIR}
 )
+
+if(SCRIPT_LIB_ELUNA)
+install(
+    DIRECTORY ${CMAKE_SOURCE_DIR}/src/modules/Eluna/extensions
+    DESTINATION ${BIN_DIR}/lua_scripts
+)
+endif()
+

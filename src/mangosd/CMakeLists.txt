@@ -41,9 +41,8 @@ source_group("SOAP" FILES ${SRC_GRP_SOAP})
 if(WIN32)
     set(PRODUCT_NAME "mangosd.exe")
     set(PRODUCT_ICON ${CMAKE_CURRENT_SOURCE_DIR}/mangosd.ico)
-    set(PRODUCT_COMPANY_NAME "getmangos.eu")
-    set(PRODUCT_FILE_DESCRIPTION "${MANGOS_PKG} Server Daemon")
-    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/VersionInfo.h.in ${CMAKE_CURRENT_BINARY_DIR}/VersionInfo.h)
+    set(PRODUCT_DESCRIPTION "${MANGOS_PKG} World Server")
+    configure_file(${CMAKE_SOURCE_DIR}/cmake/win/VersionInfo.h.in ${CMAKE_CURRENT_BINARY_DIR}/VersionInfo.h)
 endif()
 
 
@@ -52,10 +51,9 @@ add_executable(mangosd
     $<$<BOOL:${SOAP}>:${SRC_GRP_SOAP}>
     $<$<BOOL:${WIN32}>:
         ${CMAKE_CURRENT_BINARY_DIR}/VersionInfo.h
-        mangosd.rc
+        ${CMAKE_SOURCE_DIR}/cmake/win/VersionInfo.rc
     >
 )
-
 
 target_include_directories(mangosd
     PUBLIC
