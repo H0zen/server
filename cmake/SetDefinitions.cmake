@@ -81,7 +81,7 @@ if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "MSVC")
         /wd4996
         /wd4267
         /wd4244
-		/wd4245
+        /wd4245
         /wd4458
         /wd4581
         /wd4589
@@ -96,51 +96,49 @@ if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "MSVC")
 endif ()
 
 # GCC and Clang compiler options
-if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU" OR "${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
+if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU")
     set(DEFAULT_COMPILE_OPTS ${DEFAULT_COMPILE_OPTS}
         $<$<EQUAL:${PLATFORM},32>:
             -msse2
             -mfpmath=sse
         >
-
-        -Wall
-        -Wextra
-        -Wunused
-        -Wreorder
-        -Wignored-qualifiers
-        -Wmissing-braces
-        -Wreturn-type
-        -Wswitch
-        -Wswitch-default
-        -Wuninitialized
-        -Wmissing-field-initializers
         $<$<CONFIG:Debug>:
-            -glldb
-            -gline-tables-only
+          -W
+          -Wall
+          -Wextra
+          -Winit-self
+          -Wfatal-errors
+          -Winvalid-pch
+          -g3
         >
 
         $<$<CONFIG:Release>:
-            -Wno-unused-parameter
-            -Wno-unused-private-field
-            -Wno-unused-variable
-            -Wno-overloaded-virtual
-
-            $<$<CXX_COMPILER_ID:GNU>:
-                -Wmaybe-uninitialized
-                $<$<VERSION_GREATER:$<CXX_COMPILER_VERSION>,4.8>:
-                    -Wpedantic
-                    -Wreturn-local-addr
-                >
-            >
-            $<$<CXX_COMPILER_ID:Clang>:
-                -Wpedantic
-                -fdelayed-template-parsing
-                -Wno-empty-translation-unit
-                -Wno-nested-anon-types
+          $<$<COMPILE_LANGUAGE:C>:
+            --no-warnings
+          >
+          $<$<COMPILE_LANGUAGE:CXX>:
+            --no-warnings
+            -Wno-narrowing
+            -Wno-deprecated-register
             >
         >
     )
 endif ()
+
+if("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
+    set(DEFAULT_COMPILE_OPTS ${DEFAULT_COMPILE_OPTS}
+        $<$<CONFIG:Debug>:
+            -W
+            -Wall
+            -Wextra
+            -Winit-self
+            -Wfatal-errors
+            -Woverloaded-virtual
+            -glldb
+            -gline-tables-only
+        >
+    )
+endif()
 
 separate_arguments(DEFAULT_COMPILE_DEFS)
 separate_arguments(DEFAULT_COMPILE_OPTS)

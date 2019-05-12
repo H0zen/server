@@ -65,7 +65,6 @@ target_link_libraries(mangosd
     PUBLIC
         game
         $<$<BOOL:${SOAP}>:gsoap>
-        Threads::Threads
 )
 
 install(

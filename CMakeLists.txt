@@ -97,6 +97,7 @@ endif()
 find_package(Threads REQUIRED)
 find_package(MySQL   REQUIRED)
 find_package(OpenSSL REQUIRED)
+find_package(DL      REQUIRED)
 
 find_package(ZLIB  QUIET)
 find_package(BZip2 QUIET)
