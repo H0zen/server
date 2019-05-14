@@ -186,7 +186,7 @@ set(TGT_INCL
   Policies
 )
 
-configure_file("${CMAKE_CURRENT_SOURCE_DIR}/SystemConfig.h.in" "${CMAKE_CURRENT_BINARY_DIR}/SystemConfig.h")
+configure_file(SystemConfig.h.in ${CMAKE_CURRENT_BINARY_DIR}/SystemConfig.h)
 
 TEST_BIG_ENDIAN(ENDIAN_VALUE)
 

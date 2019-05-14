@@ -16,6 +16,7 @@ else(DL_LIBRARY)
   set(DL_LIBRARY "")
 endif(DL_LIBRARY)
 
+if(DL_FOUND)
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(DL
     FOUND_VAR
@@ -26,6 +27,7 @@ find_package_handle_standard_args(DL
 )
 
 mark_as_advanced(DL_INCLUDE_DIR DL_LIBRARY)
+endif()
 
 if(NOT TARGET DL::DL)
   add_library(DL::DL INTERFACE IMPORTED)

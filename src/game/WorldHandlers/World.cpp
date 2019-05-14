@@ -79,7 +79,7 @@
 #endif /* ENABLE_ELUNA */
 
 #ifdef ENABLE_PLAYERBOTS
-#include "AhBot.h"
+
 #include "PlayerbotAIConfig.h"
 #include "RandomPlayerbotMgr.h"
 #endif

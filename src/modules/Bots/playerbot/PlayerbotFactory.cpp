@@ -1,5 +1,6 @@
-#include "../botpch.h"
+#include "botpch.h"
 #include "playerbot.h"
+#include "ahbot/AhBot.h"
 #include "PlayerbotFactory.h"
 #include "SQLStorages.h"
 #include "ItemPrototype.h"

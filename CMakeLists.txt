@@ -21,11 +21,11 @@ cmake_minimum_required(VERSION 3.8 FATAL_ERROR)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-cmake_policy(SET CMP0028 NEW) # Double colon in target name means ALIAS or IMPORTED target.
-cmake_policy(SET CMP0054 NEW) # Only interpret if() arguments as variables or keywords when unquoted.
-cmake_policy(SET CMP0042 NEW) # MACOSX_RPATH is enabled by default.
-cmake_policy(SET CMP0048 NEW) # use VERSION option and its variables.
-cmake_policy(SET CMP0063 NEW) # Honor visibility properties for all target types.
+cmake_policy(SET CMP0028 NEW)
+cmake_policy(SET CMP0054 NEW)
+cmake_policy(SET CMP0042 NEW)
+cmake_policy(SET CMP0048 NEW)
+cmake_policy(SET CMP0063 NEW)
 
 set(CMAKE_CXX_STANDARD          11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -33,10 +33,7 @@ set(CMAKE_CXX_EXTENSIONS        OFF)
 
 set_property(GLOBAL
     PROPERTY USE_FOLDERS ON
-    PROPERTY REPORT_UNDEFINED_PROPERTIES "${CMAKE_BINARY_DIR}/undefined.vars"
 )
-
-set(CMAKE_CONFIGURATION_TYPES Debug Release)
 
 #==================================================================================
 # Define available cmake options below
@@ -44,8 +41,8 @@ option(BUILD_MANGOSD        "Build the main server"                         ON)
 option(BUILD_REALMD         "Build the login server"                        ON)
 option(BUILD_TOOLS          "Build the map/vmap/mmap extractors"            ON)
 option(USE_STORMLIB         "Use StormLib for reading MPQs"                 OFF)
-option(SCRIPT_LIB_ELUNA     "Compile with support for Eluna scripts"        OFF)
-option(SCRIPT_LIB_SD3       "Compile with support for ScriptDev3 scripts"   OFF)
+option(SCRIPT_LIB_ELUNA     "Compile with support for Eluna scripts"        ON)
+option(SCRIPT_LIB_SD3       "Compile with support for ScriptDev3 scripts"   ON)
 option(PLAYERBOTS           "Enable Player Bots"                            OFF)
 option(SOAP                 "Enable remote access via SOAP"                 OFF)
 option(PCH                  "Enable precompiled headers"                    OFF)

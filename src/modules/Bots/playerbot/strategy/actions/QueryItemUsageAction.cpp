@@ -1,5 +1,6 @@
 #include "botpch.h"
 #include "playerbot.h"
+#include "ahbot/AhBot.h"
 #include "QueryItemUsageAction.h"
 
 #include "../values/ItemUsageValue.h"
