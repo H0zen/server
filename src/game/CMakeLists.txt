@@ -93,7 +93,7 @@ source_group("AH Bot" FILES ${AHbot_Source})
 
 set(SRC_GRP_BOTS 
     ${Playerbot_Source}
-	${AHbot_Source}
+    ${AHbot_Source}
 )
 #Strategy files
 file(GLOB Playerbot_Strategy ${CMAKE_SOURCE_DIR}/src/modules/Bots/playerbot/strategy/*.cpp ${CMAKE_SOURCE_DIR}/src/modules/Bots/playerbot/strategy/*.h)
@@ -224,8 +224,8 @@ add_library(game STATIC
     ${SRC_GRP_WARDEN}
     ${SRC_GRP_WARDEN_MODULES}
     ${SRC_GRP_WORLD_HANDLERS}
-	$<$<BOOL:${SCRIPT_LIB_ELUNA}>:${SRC_GRP_ELUNA}>	
-	$<$<BOOL:${PLAYERBOTS}>:${SRC_GRP_BOTS}>	
+    $<$<BOOL:${SCRIPT_LIB_ELUNA}>:${SRC_GRP_ELUNA}>
+    $<$<BOOL:${PLAYERBOTS}>:${SRC_GRP_BOTS}>
 )
 
 target_include_directories(game
@@ -245,8 +245,8 @@ target_include_directories(game
         Warden
         Warden/Modules
         WorldHandlers
-		$<$<BOOL:${SCRIPT_LIB_ELUNA}>:${CMAKE_SOURCE_DIR}/src/modules/Eluna>
-		$<$<BOOL:${PLAYERBOTS}>:
+        $<$<BOOL:${SCRIPT_LIB_ELUNA}>:${CMAKE_SOURCE_DIR}/src/modules/Eluna>
+        $<$<BOOL:${PLAYERBOTS}>:
             ${CMAKE_SOURCE_DIR}/src/modules/Bots
             ${CMAKE_SOURCE_DIR}/src/modules/Bots/playerbot
             ${CMAKE_SOURCE_DIR}/src/modules/Bots/ahbot
@@ -265,7 +265,7 @@ target_link_libraries(game
     PUBLIC
         shared
         RecastNavigation::Detour
-		ZLIB::ZLIB
+        ZLIB::ZLIB
         g3dlite
         $<$<BOOL:${SCRIPT_LIB_SD3}>:mangosscript>
         $<$<BOOL:${SCRIPT_LIB_ELUNA}>:lualib>
@@ -273,7 +273,7 @@ target_link_libraries(game
 
 # Generate precompiled header
 if(PCH)
-    ADD_CXX_PCH(game pchdef.h pchdef.cpp)
+    ADD_CXX_PCH(game ${CMAKE_CURRENT_SOURCE_DIR}/pchdef.h ${CMAKE_CURRENT_SOURCE_DIR}/pchdef.cpp)
 endif()
 
 install(

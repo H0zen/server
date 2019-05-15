@@ -1,104 +1,135 @@
-FUNCTION(GET_COMMON_PCH_PARAMS PCH_HEADER PCH_FE INCLUDE_PREFIX)
-  GET_FILENAME_COMPONENT(PCH_HEADER_N ${PCH_HEADER} NAME)
-  GET_DIRECTORY_PROPERTY(TARGET_INCLUDES INCLUDE_DIRECTORIES)
+# CMake precompiled header macro
+# Distributed under the MIT Software License
+# Copyright (c) 2015-2017 Borislav Stanimirov
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy of 
+# this software and associated documentation files (the "Software"), to deal in 
+# the Software without restriction, including without limitation the rights to 
+# use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies 
+# of the Software, and to permit persons to whom the Software is furnished to do 
+# so, subject to the following conditions:
+# The above copyright notice and this permission notice shall be included in all 
+# copies or substantial portions of the Software.
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+# SOFTWARE.
+#
+# Revision history:
+#
+#  1.0 (2017.08.16) Initial standalone release
+#
+# add_cxx_pch
+#
+# Sets a precompiled header for a given target
+# Args:
+# TARGET_NAME - Name of the target. Only valid after add_library or add_executable
+# PRECOMPILED_HEADER - Header file to precompile
+# PRECOMPILED_SOURCE - MSVC specific source to do the actual precompilation. Ignored on other platforms
+#
+# Example Usage
+# add_executable(myproj
+#   src/myproj.pch.h
+#   src/myproj.pch.cpp
+#   src/main.cpp
+#   ...
+#   src/z.cpp
+#   )
+# add_cx_pch(myproj src/myproj.pch.h src/myproj.pch.cpp)
+#
+function(ADD_CXX_PCH TARGET_NAME PRECOMPILED_HEADER PRECOMPILED_SOURCE)
+    get_filename_component(PRECOMPILED_HEADER_NAME ${PRECOMPILED_HEADER} NAME)
 
-  FOREACH(ITEM ${TARGET_INCLUDES})
-    LIST(APPEND INCLUDE_FLAGS_LIST "${INCLUDE_PREFIX}\"${ITEM}\" ")
-  ENDFOREACH(ITEM)
+    if(MSVC)
+        get_filename_component(PRECOMPILED_HEADER_PATH ${PRECOMPILED_HEADER} DIRECTORY)
+        target_include_directories(${TARGET_NAME} PRIVATE ${PRECOMPILED_HEADER_PATH}) # fixes occasional IntelliSense glitches
 
-  SET(PCH_HEADER_NAME ${PCH_HEADER_N} PARENT_SCOPE)
-  SET(PCH_HEADER_OUT ${CMAKE_CURRENT_BINARY_DIR}/${PCH_HEADER_N}.${PCH_FE} PARENT_SCOPE)
-  SET(INCLUDE_FLAGS ${INCLUDE_FLAGS_LIST} PARENT_SCOPE)
-ENDFUNCTION(GET_COMMON_PCH_PARAMS)
+        get_filename_component(PRECOMPILED_HEADER_WE ${PRECOMPILED_HEADER} NAME_WE)
+        set(PRECOMPILED_BINARY "$(IntDir)/${PRECOMPILED_HEADER_WE}.pch")
 
-FUNCTION(GENERATE_CXX_PCH_COMMAND TARGET_NAME INCLUDE_FLAGS IN PCH_SRC OUT)
-  IF (CMAKE_BUILD_TYPE)
-    STRING(TOUPPER _${CMAKE_BUILD_TYPE} CURRENT_BUILD_TYPE)
-  ENDIF ()
+        get_target_property(SOURCE_FILES ${TARGET_NAME} SOURCES)
+        set(SOURCE_FILE_FOUND FALSE)
+        foreach(SOURCE_FILE ${SOURCE_FILES})
+            if(SOURCE_FILE MATCHES \\.\(c|cc|cxx|cpp\)$)
+                if(${PRECOMPILED_SOURCE} MATCHES ${SOURCE_FILE})
+                    # Set source file to generate header
+                    set_source_files_properties(
+                        ${SOURCE_FILE}
+                        PROPERTIES
+                        COMPILE_FLAGS "/Yc\"${PRECOMPILED_HEADER_NAME}\" /Fp\"${PRECOMPILED_BINARY}\""
+                        OBJECT_OUTPUTS "${PRECOMPILED_BINARY}")
+                    set(SOURCE_FILE_FOUND TRUE)
+                else()
+                    # Set and automatically include precompiled header
+                    set_source_files_properties(
+                        ${SOURCE_FILE}
+                        PROPERTIES
+                        COMPILE_FLAGS "/Yu\"${PRECOMPILED_HEADER_NAME}\" /Fp\"${PRECOMPILED_BINARY}\" /FI\"${PRECOMPILED_HEADER_NAME}\""
+                        OBJECT_DEPENDS "${PRECOMPILED_BINARY}")
+                endif()
+            endif()
+        endforeach()
+        if(NOT SOURCE_FILE_FOUND)
+            message(FATAL_ERROR "A source file for ${PRECOMPILED_HEADER} was not found. Required for MSVC builds.")
+        endif(NOT SOURCE_FILE_FOUND)
+    elseif(CMAKE_GENERATOR STREQUAL Xcode)
+        set_target_properties(
+            ${TARGET_NAME}
+            PROPERTIES
+            XCODE_ATTRIBUTE_GCC_PREFIX_HEADER "${PRECOMPILED_HEADER}"
+            XCODE_ATTRIBUTE_GCC_PRECOMPILE_PREFIX_HEADER "YES"
+            )
+    elseif(CMAKE_COMPILER_IS_GNUCC OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+        if(CMAKE_COMPILER_IS_GNUCC)
+            set(SFX gch)
+        else()
+            set(SFX pch)
+        endif()
+        # Create and set output directory.
+        set(OUTPUT_DIR "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}")
+        make_directory(${OUTPUT_DIR})
+        set(OUTPUT_NAME "${OUTPUT_DIR}/${PRECOMPILED_HEADER_NAME}.${SFX}")
 
-  SET(COMPILE_FLAGS ${CMAKE_CXX_FLAGS${CURRENT_BUILD_TYPE}})
-  LIST(APPEND COMPILE_FLAGS ${CMAKE_CXX_FLAGS})
+        # Export compiler flags via a generator to a response file
+        set(PCH_FLAGS_FILE "${OUTPUT_DIR}/${PRECOMPILED_HEADER_NAME}.rsp")
+        set(_include_directories "$<TARGET_PROPERTY:${TARGET_NAME},INCLUDE_DIRECTORIES>")
+        set(_compile_definitions "$<TARGET_PROPERTY:${TARGET_NAME},COMPILE_DEFINITIONS>")
+        set(_compile_flags "$<TARGET_PROPERTY:${TARGET_NAME},COMPILE_FLAGS>")
+        set(_compile_options "$<TARGET_PROPERTY:${TARGET_NAME},COMPILE_OPTIONS>")
+        set(_include_directories "$<$<BOOL:${_include_directories}>:-I$<JOIN:${_include_directories},\n-I>\n>")
+        set(_compile_definitions "$<$<BOOL:${_compile_definitions}>:-D$<JOIN:${_compile_definitions},\n-D>\n>")
+        set(_compile_flags "$<$<BOOL:${_compile_flags}>:$<JOIN:${_compile_flags},\n>\n>")
+        set(_compile_options "$<$<BOOL:${_compile_options}>:$<JOIN:${_compile_options},\n>\n>")
+        file(GENERATE OUTPUT "${PCH_FLAGS_FILE}" CONTENT "${_compile_definitions}${_include_directories}${_compile_flags}${_compile_options}\n")
 
-  IF ("${CMAKE_SYSTEM_NAME}" MATCHES "Darwin")
-    IF (NOT "${CMAKE_OSX_ARCHITECTURES}" STREQUAL "")
-      LIST(APPEND COMPILE_FLAGS "-arch ${CMAKE_OSX_ARCHITECTURES}")
-    ENDIF ()
-    IF (NOT "${CMAKE_OSX_SYSROOT}" STREQUAL "")
-      LIST(APPEND COMPILE_FLAGS "-isysroot ${CMAKE_OSX_SYSROOT}")
-    ENDIF ()
-    IF (NOT "${CMAKE_OSX_DEPLOYMENT_TARGET}" STREQUAL "")
-      LIST(APPEND COMPILE_FLAGS "-mmacosx-version-min=${CMAKE_OSX_DEPLOYMENT_TARGET}")
-    ENDIF ()
-  ENDIF ()
+        # Gather global compiler options, definitions, etc.
+        string(TOUPPER "CMAKE_CXX_FLAGS_${CMAKE_BUILD_TYPE}" CXX_FLAGS)
+        set(COMPILER_FLAGS "${${CXX_FLAGS}} ${CMAKE_CXX_FLAGS}")
+        separate_arguments(COMPILER_FLAGS)
 
-  GET_DIRECTORY_PROPERTY(TARGET_DEFINITIONS COMPILE_DEFINITIONS)
-  FOREACH(ITEM ${TARGET_DEFINITIONS})
-    LIST(APPEND DEFINITION_FLAGS "-D${ITEM} ")
-  ENDFOREACH(ITEM)
+        # Add a custom target for building the precompiled header.
+        # HACK: Add explicit -std=${CXX_STD} to work around an ugly issue for CMake 3.2+
+        # which prevents us from actually scraping the -std=??? flag set by target_compile_features
+        set(CXX_STD c++11)
+        add_custom_command(
+            OUTPUT ${OUTPUT_NAME}
+            COMMAND ${CMAKE_CXX_COMPILER} @${PCH_FLAGS_FILE} ${COMPILER_FLAGS} -x c++-header -std=${CXX_STD} -o ${OUTPUT_NAME} ${PRECOMPILED_HEADER}
+            DEPENDS ${PRECOMPILED_HEADER})
+        add_custom_target(${TARGET_NAME}_${SFX} DEPENDS ${OUTPUT_NAME})
+        add_dependencies(${TARGET_NAME} ${TARGET_NAME}_${SFX})
 
-  SEPARATE_ARGUMENTS(COMPILE_FLAGS)
-  SEPARATE_ARGUMENTS(INCLUDE_FLAGS)
-  SEPARATE_ARGUMENTS(DEFINITION_FLAGS)
+        get_target_property(SOURCE_FILES ${TARGET_NAME} SOURCES)
 
-  GET_FILENAME_COMPONENT(PCH_SRC_N ${PCH_SRC} NAME)
-  ADD_LIBRARY(${PCH_SRC_N}_dephelp MODULE ${PCH_SRC})
+        foreach(SOURCE_FILE ${SOURCE_FILES})
+            if(SOURCE_FILE MATCHES \\.\(cxx|cpp\)$)
+                set_source_files_properties(${SOURCE_FILE} PROPERTIES
+                   COMPILE_FLAGS "-include ${OUTPUT_DIR}/${PRECOMPILED_HEADER_NAME} -Winvalid-pch"
+                )
+            endif()
+        endforeach()
+    endif()
+endfunction()
 
-  ADD_CUSTOM_COMMAND(
-    OUTPUT ${OUT}
-    COMMAND ${CMAKE_CXX_COMPILER}
-    ARGS ${DEFINITION_FLAGS} ${COMPILE_FLAGS} ${INCLUDE_FLAGS} -x c++-header ${IN} -o ${OUT}
-    DEPENDS ${IN} ${PCH_SRC_N}_dephelp
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-  )
-
-  ADD_CUSTOM_TARGET(generate_${PCH_SRC_N}
-    DEPENDS ${OUT}
-  )
-
-  ADD_DEPENDENCIES(${TARGET_NAME} generate_${PCH_SRC_N})
-ENDFUNCTION(GENERATE_CXX_PCH_COMMAND)
-
-FUNCTION(ADD_CXX_PCH_GCC TARGET_NAME PCH_HEADER PCH_SOURCE)
-  GET_COMMON_PCH_PARAMS(${PCH_HEADER} "gch" "-I")
-  GENERATE_CXX_PCH_COMMAND(${TARGET_NAME} "${INCLUDE_FLAGS}" ${PCH_HEADER} ${PCH_SOURCE} ${PCH_HEADER_OUT})
-  SET_TARGET_PROPERTIES(
-    ${TARGET_NAME} PROPERTIES
-    COMPILE_FLAGS "-include ${CMAKE_CURRENT_BINARY_DIR}/${PCH_HEADER_NAME}"
-  )
-ENDFUNCTION(ADD_CXX_PCH_GCC)
-
-FUNCTION(ADD_CXX_PCH_CLANG TARGET_NAME PCH_HEADER PCH_SOURCE)
-  GET_COMMON_PCH_PARAMS(${PCH_HEADER} "pch" "-I")
-  GENERATE_CXX_PCH_COMMAND(${TARGET_NAME} "${INCLUDE_FLAGS}" ${PCH_HEADER} ${PCH_SOURCE} ${PCH_HEADER_OUT})
-  SET_TARGET_PROPERTIES(
-    ${TARGET_NAME} PROPERTIES
-    COMPILE_FLAGS "-include-pch ${PCH_HEADER_OUT}"
-  )
-ENDFUNCTION(ADD_CXX_PCH_CLANG)
-
-FUNCTION(ADD_CXX_PCH_MSVC TARGET_NAME PCH_HEADER PCH_SOURCE)
-  GET_COMMON_PCH_PARAMS(${PCH_HEADER} "pch" "/I")
-  SET_TARGET_PROPERTIES(
-    ${TARGET_NAME} PROPERTIES
-    COMPILE_FLAGS "/FI${PCH_HEADER_NAME} /Yu${PCH_HEADER_NAME}"
-  )
-  SET_SOURCE_FILES_PROPERTIES(
-    ${PCH_SOURCE} PROPERTIES
-    COMPILE_FLAGS "/Yc${PCH_HEADER_NAME}"
-  )
-ENDFUNCTION(ADD_CXX_PCH_MSVC)
-
-FUNCTION(ADD_CXX_PCH TARGET_NAME PCH_HEADER PCH_SOURCE)
-  IF (MSVC)
-    ADD_CXX_PCH_MSVC(${TARGET_NAME} ${PCH_HEADER} ${PCH_SOURCE})
-  ELSEIF ("${CMAKE_GENERATOR}" MATCHES "Xcode")
-    SET_TARGET_PROPERTIES(${TARGET_NAME} PROPERTIES
-      XCODE_ATTRIBUTE_GCC_PRECOMPILE_PREFIX_HEADER YES
-      XCODE_ATTRIBUTE_GCC_PREFIX_HEADER "${CMAKE_CURRENT_SOURCE_DIR}/${PCH_HEADER}"
-    )
-  ELSEIF ("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
-    ADD_CXX_PCH_CLANG(${TARGET_NAME} ${PCH_HEADER} ${PCH_SOURCE})
-  ELSEIF ("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU")
-    ADD_CXX_PCH_GCC(${TARGET_NAME} ${PCH_HEADER} ${PCH_SOURCE})
-  ENDIF ()
-ENDFUNCTION(ADD_CXX_PCH)
